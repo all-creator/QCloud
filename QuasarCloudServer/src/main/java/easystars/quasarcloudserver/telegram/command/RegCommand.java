@@ -1,0 +1,45 @@
+package easystars.quasarcloudserver.telegram.command;
+
+import easystars.quasarcloudserver.bigdata.logging.LogTemplate;
+import easystars.quasarcloudserver.bigdata.mysql.models.Client;
+import easystars.quasarcloudserver.spring.management.busnes.Session;
+import easystars.quasarcloudserver.spring.management.busnes.UserServes;
+import easystars.quasarcloudserver.telegram.system.Bot;
+import easystars.quasarcloudserver.telegram.utils.enums.Keyboard;
+import lombok.SneakyThrows;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.bots.AbsSender;
+
+public class RegCommand extends Command{
+
+    public RegCommand() {
+        super("reg", " - регестрирует ПК в системе. Использование: /reg <UUID>");
+    }
+
+    @SneakyThrows
+    @Override
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
+        if (getPermissions(user)){
+            log.info(LogTemplate.PROCESSING, user.getId(), getCommandIdentifier());
+
+            SendMessage message = new SendMessage(user.getId().toString(),"Успешная регистрация! \nЧто бы завершить текущий сеанс используйте -> /close или /use \"имя пользователя\", для быстрого переключения между машинами. Что бы выбрать все машины введите -> /all");
+            easystars.quasarcloudserver.bigdata.mysql.models.User esuser = Bot.getUserRepository().findById(user.getId()).orElse(null);
+            if (!UserServes.unregisterUsers.containsKey(strings[0])) {
+                Bot.sendMessage(new SendMessage(user.getId().toString(),"Клиент не найден или срок на подключение истёк, повторите запрос"));
+                return;
+            }
+            Client client = UserServes.unregisterUsers.get(strings[0]);
+            esuser.addClient(client);
+            Bot.getClientRepository().save(client);
+            Bot.getUserRepository().save(esuser);
+            message.setReplyMarkup(Keyboard.HOME.getKeyboard(esuser));
+            absSender.execute(message);
+            message.setText("Добро пожаловать Домой!");
+            execute(absSender, message, user);
+            Session session = Session.openNewSession(esuser, client);
+            session.sessionAutoConfig();
+        } else absSender.execute(new SendMessage(chat.getId().toString(),"Пользователь не имеет доступа -> /start"));
+    }
+}
