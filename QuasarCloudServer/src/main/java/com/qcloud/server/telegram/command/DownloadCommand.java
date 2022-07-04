@@ -13,7 +13,7 @@ import java.io.File;
 
 public class DownloadCommand extends Command{
     public DownloadCommand() {
-        super("download", " - отпровляет вам файл актуальной версии QCloudLauncher");
+        super("download", " - отправляет вам файл актуальной версии QCloudLauncher");
     }
 
     @SneakyThrows

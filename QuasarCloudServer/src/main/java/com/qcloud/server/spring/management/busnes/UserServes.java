@@ -51,9 +51,9 @@ public class UserServes {
 
     public static String userCheckLog(UserRepository repository, User user){
         if (userCheck(repository, user)){
-            return "Пользователь уже зарегестрирован в базе данных!";
+            return "Пользователь уже зарегистрирован в базе данных!";
         } else {
-            return "Пользователь добавлен в базу давнных!";
+            return "Пользователь добавлен в базу данных!";
         }
     }
 }

@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 
 public class RunCommand extends Command{
     public RunCommand() {
-        super("run", " - выполнить любую коанду на вашем компьютере в окне терминала");
+        super("run", " - выполнить любую команду на вашем компьютере в окне терминала");
     }
 
     @SneakyThrows

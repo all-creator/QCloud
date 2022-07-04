@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 public class RegCommand extends Command{
 
     public RegCommand() {
-        super("reg", " - регестрирует ПК в системе. Использование: /reg <UUID>");
+        super("reg", " - регистрирует ПК в системе. Использование: /reg <UUID>");
     }
 
     @SneakyThrows

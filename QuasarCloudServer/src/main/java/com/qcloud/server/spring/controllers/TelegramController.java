@@ -37,7 +37,7 @@ public class TelegramController extends MainController<TelegramController> {
         client.setIp(request.getRemoteAddr());
         client.setInfo("None");
         UserServes.unregisterUsers.put(auth.getUuid(), client);
-        log.info("Получен запрос на регестрацию: {}, UUID: {}", client.getIp(), auth.getUuid());
+        log.info("Получен запрос на регистрацию: {}, UUID: {}", client.getIp(), auth.getUuid());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
