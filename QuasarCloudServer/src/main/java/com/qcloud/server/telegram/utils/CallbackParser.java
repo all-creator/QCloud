@@ -7,6 +7,9 @@ import com.qcloud.server.telegram.system.Bot;
 import com.qcloud.server.telegram.utils.enums.InlineKeyboard;
 import com.qcloud.server.telegram.utils.enums.Keyboard;
 import lombok.SneakyThrows;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -18,6 +21,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import java.io.File;
 
 public class CallbackParser {
+
+    static final Logger log = LogManager.getLogger();
 
     public static EditMessageText volume(Session session, SendMessage message, CallbackQuery main){
         String data = main.getData().split(":")[1];
@@ -105,7 +110,8 @@ public class CallbackParser {
 
     @SneakyThrows
     public static EditMessageText getLicense(CallbackQuery main, User user, Update update) {
-        EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().inlineMessageId(update.getCallbackQuery().getInlineMessageId());
+
+        EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().chatId(String.valueOf(update.getCallbackQuery().getMessage().getChatId())).messageId(update.getCallbackQuery().getMessage().getMessageId());
 
         StringBuilder builder = new StringBuilder();
         editMessageText.text("Пользователь " + main.getFrom().getUserName() + " не имеет доступа.");
@@ -126,6 +132,7 @@ public class CallbackParser {
             document.setChatId(String.valueOf(main.getMessage().getChatId()));
             Bot.getInstance().execute(document);
         }
+        log.log(Level.FATAL, editMessageText.build().getInlineMessageId());
         editMessageText.text(builder.toString());
         return editMessageText.build();
     }
