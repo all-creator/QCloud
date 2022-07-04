@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
@@ -44,7 +45,7 @@ public class Bot extends TelegramLongPollingCommandBot {
     @Getter
     private static final Map<String, Session> sessionMap = new HashMap<>();
 
-    public Bot() {
+    public Bot(UserRepository userRepository, ClientRepository clientRepository) {
         log.info("Registering commands...");
         log.info("Registering '/start'...");
         register(new StartCommand());
@@ -67,6 +68,9 @@ public class Bot extends TelegramLongPollingCommandBot {
         var helpCommand = new HelpCommand(this);
         log.info("Registering '/help'...");
         register(helpCommand);
+        this.userRepository = userRepository;
+        this.clientRepository = clientRepository;
+        instance = this;
     }
 
     @Getter

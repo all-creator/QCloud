@@ -28,9 +28,7 @@ public class UserServes {
     }
 
     public static void requestAdd(Client client, Request request){
-        System.out.println(UserServes.request.get(client.getHash()));
         UserServes.request.get(client.getHash()).add(request);
-        System.out.println(UserServes.request.get(client.getHash()));
     }
 
     public static void userSave(UserRepository repository, User user){
