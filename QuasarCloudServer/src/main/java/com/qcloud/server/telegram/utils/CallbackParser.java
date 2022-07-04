@@ -105,7 +105,7 @@ public class CallbackParser {
 
     @SneakyThrows
     public static EditMessageText getLicense(CallbackQuery main, User user, Update update) {
-        EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().messageId(update.getMessage().getMessageId()).chatId(update.getMessage().getChatId().toString());
+        EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().inlineMessageId(update.getCallbackQuery().getInlineMessageId());
 
         StringBuilder builder = new StringBuilder();
         editMessageText.text("Пользователь " + main.getFrom().getUserName() + " не имеет доступа.");
