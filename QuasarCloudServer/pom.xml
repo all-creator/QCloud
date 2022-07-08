@@ -10,11 +10,11 @@
     </parent>
     <groupId>EasyStars</groupId>
     <artifactId>QuasarCloudServer</artifactId>
-    <version>1.1.0.12-beta</version>
+    <version>4.1.0.0-alpha1</version>
     <name>QuasarCloudServer</name>
     <description>Server for project QCloud</description>
     <properties>
-        <java.version>15</java.version>
+        <java.version>16</java.version>
     </properties>
     <dependencies>
         <!-- Telegram API -->

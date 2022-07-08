@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+@Deprecated(since = "3.0.0")
 public class API {
     private static final String TOKEN = "token=D!3%26%23!@aidaDHAI(I*12331231AKAJJjjjho1233h12313^%%23%@4112dhas91^^^^31";
     private static final String URL = "https://api.easy-stars.ru";

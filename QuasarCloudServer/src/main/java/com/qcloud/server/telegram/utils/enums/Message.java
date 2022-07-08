@@ -1,8 +1,11 @@
 package com.qcloud.server.telegram.utils.enums;
 
 public enum Message {
+    @Deprecated(since = "4.0.0")
     OBT_VERSION_ONLY_SUPPORT("Похоже данный функционал поддерживается только начиная с версии сервера 3.5.1, версии 3.5.1 - 3.5.6 доступны только на ОБТ"),
-    СBT_VERSION_ONLY_SUPPORT("Похоже данный функционал поддерживается только начиная с версии сервера 3.5.7, это и версии выше доступны только на ЗБТ"),
+    @Deprecated(since = "4.0.0")
+    CBT_VERSION_ONLY_SUPPORT("Похоже данный функционал поддерживается только начиная с версии сервера 3.5.7, это и версии выше доступны только на ЗБТ"),
+    @Deprecated(since = "4.0.0")
     UPDATE("""
             *QCloud Server v3.0.0*
                         

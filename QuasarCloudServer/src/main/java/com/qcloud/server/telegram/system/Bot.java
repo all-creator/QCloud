@@ -3,9 +3,9 @@ package com.qcloud.server.telegram.system;
 import com.qcloud.server.bigdata.mysql.models.User;
 import com.qcloud.server.bigdata.mysql.repository.ClientRepository;
 import com.qcloud.server.bigdata.mysql.repository.UserRepository;
+import com.qcloud.server.spring.management.api.API;
 import com.qcloud.server.spring.management.busnes.Session;
 import com.qcloud.server.spring.management.busnes.UserServes;
-import com.qcloud.server.spring.management.api.API;
 import com.qcloud.server.spring.management.busnes.object.Request;
 import com.qcloud.server.telegram.command.*;
 import com.qcloud.server.telegram.utils.CallbackParser;
@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
@@ -33,6 +32,7 @@ import java.util.Map;
 
 
 @Component
+@Deprecated(since = "4.0.0")
 public class Bot extends TelegramLongPollingCommandBot {
 
     private static final Logger log = LogManager.getLogger(Bot.class);
@@ -200,7 +200,7 @@ public class Bot extends TelegramLongPollingCommandBot {
             saveUser(user);
             return CallbackParser.getLicense(main, user, update);
         } else if (main.getData().startsWith("v:")) {
-            execute(CallbackParser.volume(session, message, main));
+            execute(CallbackParser.volume(session, main));
             return null;
         } else if (main.getData().startsWith("b:")) {
             execute(CallbackParser.brightness(session, message, main));

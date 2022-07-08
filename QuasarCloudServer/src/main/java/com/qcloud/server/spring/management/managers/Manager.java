@@ -1,7 +1,7 @@
 package com.qcloud.server.spring.management.managers;
 
 import com.qcloud.server.spring.management.api.API;
-
+@Deprecated(since = "4.0.0")
 public abstract class Manager {
 
     String trigger;

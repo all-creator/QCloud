@@ -14,13 +14,13 @@ public enum Holders {
     MENU("💻 Меню 🖥"){
         @Override
         public SendMessage process(Session session, SendMessage message) {
-            message.setText("Полная информация о системе:");
             User user = Bot.getUserRepository().findById(Long.parseLong(message.getChatId())).orElse(null);
             user.getClients().forEach(client -> UserServes.requestAdd(client, new Request(UpdateType.FULL_INFO)));
             message.setReplyMarkup(Keyboard.MENU.getKeyboard(user));
             return message;
         }
     },
+    @Deprecated(since = "3.0.0")
     CERBERUS("🔥 Цербер 🔥") {
         @Override
         public SendMessage process(Session session, SendMessage message) {
@@ -37,6 +37,7 @@ public enum Holders {
             return null;
         }
     },
+    @Deprecated
     ABOUT("О нас ❓") {
         @Override
         public SendMessage process(Session session, SendMessage message) {
@@ -85,6 +86,7 @@ public enum Holders {
             return null;
         }
     },
+    @Deprecated(since = "4.0.0")
     FILES("Файлы") {
         @Override
         public SendMessage process(Session session, SendMessage message) {
@@ -126,6 +128,7 @@ public enum Holders {
             return message;
         }
     },
+    @Deprecated(since = "4.0.0")
     VERSION_CONTROL("Контроль версий"){
         @Override
         public SendMessage process(Session session, SendMessage message) {

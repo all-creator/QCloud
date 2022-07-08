@@ -26,7 +26,6 @@ public class Worker {
             case "brightness" -> SystemController.setBrightness(Integer.parseInt(update.getArgs()[0]));
             case "command" -> runCommand(update.getArgs());
             case "script" -> runScript(update.getArgs());
-            case "ping" -> System.out.println("ping");
             default -> Server.getInstance().send(LocalSystemError.ERROR110.getInformation());
         }
     }

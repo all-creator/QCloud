@@ -14,6 +14,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @EqualsAndHashCode(callSuper = true)
+@Deprecated(since = "4.0.0")
 abstract class Command extends BotCommand {
     final Logger log = LogManager.getLogger(getClass());
 

@@ -24,27 +24,8 @@ public class CallbackParser {
 
     static final Logger log = LogManager.getLogger();
 
-    public static EditMessageText volume(Session session, SendMessage message, CallbackQuery main){
-        String data = main.getData().split(":")[1];
-        int volume = session.getVolume();
-        switch (data){
-            case "+1" -> volume ++;
-            case "+5" -> volume += 5;
-            case "+10" -> volume += 10;
-            case "+25" -> volume += 25;
-            case "+50" -> volume += 50;
-            case "-50" -> volume -= 50;
-            case "-25" -> volume -= 25;
-            case "-10" -> volume -= 10;
-            case "-5" -> volume -= 5;
-            case "-1" -> volume --;
-            case "0%" -> volume = 0;
-            case "50%" -> volume = 50;
-            case "100%" -> volume = 100;
-            default -> message.setText("Что-то явно пошло не так, скорее всего я ещё не поддерживаю эту функцию, но её точно уже реализуют. Следите за обновлениями!");
-        }
-        if (volume > 100) volume = 100;
-        if (volume < 0) volume = 0;
+    public static EditMessageText volume(Session session, CallbackQuery main){
+        int volume = parseVolume(main.getData().split(":")[1], session.getVolume());
         session.setVolumeLevel(volume);
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setText("Клиент: " + session.getCurrentClient().getIp() + "\n\nЗначение громкости: " + session.getVolume());
@@ -54,17 +35,17 @@ public class CallbackParser {
         return editMessageText;
     }
 
-    private int setVolume(String volume, int currentVolume) {
-        if (volume.startsWith("-")) {
-            currentVolume -= Integer.parseInt(volume.substring(1));
-        } else if (volume.startsWith("+")) {
-            currentVolume += Integer.parseInt(volume.substring(1));
-        }
+    private static int parseVolume(String volume, int currentVolume) {
+        if (volume.startsWith("-")) currentVolume -= Integer.parseInt(volume.substring(1));
+        else if (volume.startsWith("+")) currentVolume += Integer.parseInt(volume.substring(1));
+        else if (volume.endsWith("%")) currentVolume = Integer.parseInt(volume.substring(0, volume.length() - 1));
+        else return currentVolume;
         if (currentVolume > 100) currentVolume = 100;
         if (currentVolume < 0) currentVolume = 0;
         return currentVolume;
     }
 
+    @Deprecated(since = "4.0.0")
     public static EditMessageText brightness(Session session, SendMessage message, CallbackQuery main){
         String data = main.getData().split(":")[1];
         int brightness = session.getBrightness();
@@ -109,6 +90,7 @@ public class CallbackParser {
     }
 
     @SneakyThrows
+    @Deprecated(since = "4.0.0")
     public static EditMessageText getLicense(CallbackQuery main, User user, Update update) {
 
         EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().chatId(String.valueOf(update.getCallbackQuery().getMessage().getChatId())).messageId(update.getCallbackQuery().getMessage().getMessageId());

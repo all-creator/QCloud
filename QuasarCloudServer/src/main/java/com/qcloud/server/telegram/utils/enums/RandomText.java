@@ -2,6 +2,7 @@ package com.qcloud.server.telegram.utils.enums;
 
 import java.util.Random;
 
+@Deprecated(since = "4.0.0")
 public enum RandomText {
     F_F("небольшая нагрузка на ЦП"),
     F_S("очередное подорожание видеокарт"),
