@@ -30,7 +30,7 @@ public class FinishController {
     @FXML
     public void getStatus() {
         try {
-            URL url = new URL("http://easy-stars.ru:8081/status");
+            URL url = new URL("http://88.99.240.171:8081/status");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.connect();
             if (http.getResponseCode() == 200) online.setText("Статус сервера: Онлайн");

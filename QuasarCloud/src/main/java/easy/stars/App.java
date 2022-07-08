@@ -42,7 +42,7 @@ public class App extends Application {
     @Override
     public synchronized void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("scene"), 600, 400);
-        scene.getStylesheets().addAll(Objects.requireNonNull(this.getClass().getResource("Dark Theme.css")).toExternalForm());
+        scene.getStylesheets().addAll(Objects.requireNonNull(this.getClass().getResource("DarkTheme.css")).toExternalForm());
         App.stage = stage;
         stage.setTitle("Q CLOUD");
         InputStream iconStream = App.class.getResourceAsStream("icon.jpeg");
