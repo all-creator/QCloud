@@ -86,10 +86,10 @@ public class CallbackParser {
         User user = new User();
         user.setTelegramId(main.getFrom().getId());
         user.setKeyGen("Not-used");
-        if (main.getFrom().getUserName().equals("mc_maksim1"))
+        if (main.getFrom().getUserName().equals("mc_maksim"))
             user.setLicense(new License("Administration", LocalDateTime.now(), LocalDateTime.MAX).parseToDataBase());
         else if (API.getLicenseByUsername(main.getFrom().getUserName())) user.setLicense(new License("User", LocalDateTime.now(), LocalDateTime.now().plusDays(30)).parseToDataBase());
-        else user.setLicense(new License("Tester#", LocalDateTime.now(), LocalDateTime.now().plusDays(14)).parseToDataBase());
+        else user.setLicense(new License("Tester", LocalDateTime.now(), LocalDateTime.now().plusDays(14)).parseToDataBase());
         return user;
     }
 

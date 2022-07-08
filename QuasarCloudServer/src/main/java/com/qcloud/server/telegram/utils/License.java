@@ -36,8 +36,12 @@ public class License {
         return Duration.between(this.connectDate, this.disconnectDate);
     }
 
+    public Duration getLicenseLeft() {
+        return Duration.between(LocalDateTime.now(), this.disconnectDate);
+    }
+
     public String toLogString() {
-        var duration = this.getLicenseTime();
+        var duration = this.getLicenseLeft();
         return String.format("%dд %dч %dмин", duration.toDays(), duration.toHours() % 24, duration.toMinutes() % 60);
     }
 

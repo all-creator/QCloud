@@ -120,7 +120,7 @@ public class Bot extends TelegramLongPollingCommandBot {
                     if (client.getIp().equals(update.getMessage().getText())) Session.openNewSession(user, client);
                 });
                 if (!sessionMap.containsKey(update.getMessage().getChatId().toString())) {
-                    message.setText("Я не нашёл вас в списке пользователей, эта ошибка не должна возникать, если вы видите её убедитесь что ваш клиент активен");
+                    message.setText("Похоже у вас пока нет подключённых машин (((");
                     return message;
                 }
             }

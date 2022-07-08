@@ -10,7 +10,7 @@
     </parent>
     <groupId>EasyStars</groupId>
     <artifactId>QuasarCloudServer</artifactId>
-    <version>4.1.0.2-alpha1</version>
+    <version>4.1.0.4</version>
     <name>QuasarCloudServer</name>
     <description>Server for project QCloud</description>
     <properties>
