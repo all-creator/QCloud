@@ -13,6 +13,6 @@
 ## Карта проекта
 ```mermaid
 graph LR
-QCloud(QCloud) -- Server souce code --> Sever(Sever)
-QCloud -- Launcher souce code--> Launcher(Launcher)
+QCloud(QCloud) -- Server souce code --> QuasarCloudServer(Sever)
+QCloud -- Launcher souce code--> QuasarCloud(Launcher)
 ```
