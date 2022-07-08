@@ -1,4 +1,4 @@
 package com.qcloud.server.spring.management.managers;
-@Deprecated(since = "4.0.0")
+@Deprecated(since = "3.0.0")
 public class UpdateManager {
 }

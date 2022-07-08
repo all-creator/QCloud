@@ -1,9 +1,8 @@
 package com.qcloud.server.telegram.utils.enums;
 
 import lombok.Getter;
-
-@Getter
 @Deprecated(since = "4.0.0")
+@Getter
 public enum UpdateType {
     FULL_INFO("info", "get info about client", "full"),
     INFO("info", "get info about client", "low"),

@@ -89,8 +89,8 @@ public class CallbackParser {
         return user;
     }
 
-    @SneakyThrows
     @Deprecated(since = "4.0.0")
+    @SneakyThrows
     public static EditMessageText getLicense(CallbackQuery main, User user, Update update) {
 
         EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().chatId(String.valueOf(update.getCallbackQuery().getMessage().getChatId())).messageId(update.getCallbackQuery().getMessage().getMessageId());

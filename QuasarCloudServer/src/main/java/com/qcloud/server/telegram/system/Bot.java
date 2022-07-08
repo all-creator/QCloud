@@ -30,9 +30,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-
-@Component
 @Deprecated(since = "4.0.0")
+@Component
 public class Bot extends TelegramLongPollingCommandBot {
 
     private static final Logger log = LogManager.getLogger(Bot.class);
