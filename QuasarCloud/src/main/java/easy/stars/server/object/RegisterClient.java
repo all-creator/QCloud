@@ -1,6 +1,6 @@
 package easy.stars.server.object;
 
-import easy.stars.identifier.Client;
+import easy.stars.system.identifier.Client;
 
 import java.util.Arrays;
 

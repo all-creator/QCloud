@@ -1,10 +1,10 @@
 package easy.stars.server.log;
 
 import com.google.gson.Gson;
-import easy.stars.identifier.Client;
 import easy.stars.server.Config;
 import easy.stars.server.object.LogMessage;
 import easy.stars.server.utils.Updater;
+import easy.stars.system.identifier.Client;
 
 import java.io.IOException;
 import java.io.OutputStream;

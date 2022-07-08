@@ -1,13 +1,13 @@
 package easy.stars.server.utils;
 
+import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
 import easy.stars.server.log.LocalSystemError;
-import easy.stars.server.Server;
 import easy.stars.server.object.Update;
+import easy.stars.system.utils.OSUtils;
 import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
-
 
 import java.io.IOException;
 
@@ -26,6 +26,7 @@ public class Worker {
             case "brightness" -> SystemController.setBrightness(Integer.parseInt(update.getArgs()[0]));
             case "command" -> runCommand(update.getArgs());
             case "script" -> runScript(update.getArgs());
+            case "ping" -> System.out.println("ping");
             default -> Server.getInstance().send(LocalSystemError.ERROR110.getInformation());
         }
     }
@@ -65,7 +66,7 @@ public class Worker {
         for (String argument : args) {
             builder.append(" ").append(argument);
         }
-        Server.getInstance().send("Выполняю: " + builder.toString());
+        Server.getInstance().send("Выполняю: " + builder);
         Runtime.getRuntime().exec(builder.toString());
     }
 

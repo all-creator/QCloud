@@ -1,4 +1,4 @@
-package easy.stars.identifier;
+package easy.stars.system.identifier;
 
 import java.util.UUID;
 

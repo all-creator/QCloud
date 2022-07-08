@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane id="pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easy.stars.controllers.MainController">
+<AnchorPane id="pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easy.stars.javafx.controllers.MainController">
    <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#buttonClicked" text="Продолжить" textAlignment="CENTER" AnchorPane.leftAnchor="252.0" AnchorPane.topAnchor="290.0" />
    <CheckBox fx:id="agree" mnemonicParsing="false" selected="true" text="Я прочитал и принимаю лицензионное соглашение и политику компании" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="200.0" />
    <CheckBox fx:id="log" mnemonicParsing="false" selected="true" text="Отправлять данные об ошибках на сервер" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="100.0" />

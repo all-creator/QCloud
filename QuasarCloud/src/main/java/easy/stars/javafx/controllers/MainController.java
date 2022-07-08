@@ -1,4 +1,4 @@
-package easy.stars.controllers;
+package easy.stars.javafx.controllers;
 
 import easy.stars.App;
 import javafx.fxml.FXML;

@@ -1,7 +1,6 @@
 package easy.stars;
 
 import com.google.gson.Gson;
-import easy.stars.identifier.ComputerIdentifier;
 import easy.stars.server.Config;
 import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
@@ -9,9 +8,10 @@ import easy.stars.server.data.Loader;
 import easy.stars.server.log.LogBase;
 import easy.stars.server.object.RegisterClient;
 import easy.stars.server.utils.Download;
-import easy.stars.server.utils.OSUtils;
 import easy.stars.server.utils.Updater;
 import easy.stars.server.utils.Zip;
+import easy.stars.system.identifier.ComputerIdentifier;
+import easy.stars.system.utils.OSUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

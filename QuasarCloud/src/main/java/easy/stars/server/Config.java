@@ -1,7 +1,7 @@
 package easy.stars.server;
 
-import easy.stars.identifier.Client;
-import easy.stars.server.utils.OSUtils;
+import easy.stars.system.identifier.Client;
+import easy.stars.system.utils.OSUtils;
 
 import java.io.File;
 import java.io.FileWriter;
