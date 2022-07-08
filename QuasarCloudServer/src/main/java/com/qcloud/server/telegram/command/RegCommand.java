@@ -12,6 +12,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import java.util.Objects;
+
 public class RegCommand extends Command{
 
     public RegCommand() {
@@ -31,7 +33,7 @@ public class RegCommand extends Command{
                 return;
             }
             Client client = UserServes.unregisterUsers.get(strings[0]);
-            esuser.addClient(client);
+            Objects.requireNonNull(esuser).addClient(client);
             Bot.getClientRepository().save(client);
             Bot.getUserRepository().save(esuser);
             message.setReplyMarkup(Keyboard.HOME.getKeyboard(esuser));

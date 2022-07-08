@@ -1,5 +1,6 @@
 package com.qcloud.server.bigdata.mysql.models;
 
+import com.qcloud.server.telegram.utils.License;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

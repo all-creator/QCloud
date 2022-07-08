@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class AdditionController extends MainController<AdditionController> {
 
     @RequestMapping(value = "/status")
     @ResponseBody
-    public ResponseEntity<Boolean> register(HttpServletRequest request) {
+    public ResponseEntity<Boolean> register() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

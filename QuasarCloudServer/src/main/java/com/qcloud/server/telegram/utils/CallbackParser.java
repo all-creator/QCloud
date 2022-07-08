@@ -19,6 +19,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.io.File;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CallbackParser {
 
@@ -83,9 +86,10 @@ public class CallbackParser {
         User user = new User();
         user.setTelegramId(main.getFrom().getId());
         user.setKeyGen("Not-used");
-        if (main.getFrom().getUserName().equals("mc_maksim")) user.setLicense("Administration");
-        else if (API.getLicenseByUsername(main.getFrom().getUserName())) user.setLicense("User");
-        else user = null;
+        if (main.getFrom().getUserName().equals("mc_maksim1"))
+            user.setLicense(new License("Administration", LocalDateTime.now(), LocalDateTime.MAX).parseToDataBase());
+        else if (API.getLicenseByUsername(main.getFrom().getUserName())) user.setLicense(new License("User", LocalDateTime.now(), LocalDateTime.now().plusDays(30)).parseToDataBase());
+        else user.setLicense(new License("Tester#", LocalDateTime.now(), LocalDateTime.now().plusDays(14)).parseToDataBase());
         return user;
     }
 
@@ -93,15 +97,26 @@ public class CallbackParser {
     @SneakyThrows
     public static EditMessageText getLicense(CallbackQuery main, User user, Update update) {
 
-        EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder().chatId(String.valueOf(update.getCallbackQuery().getMessage().getChatId())).messageId(update.getCallbackQuery().getMessage().getMessageId());
+        EditMessageText.EditMessageTextBuilder editMessageText = EditMessageText.builder()
+                .chatId(String.valueOf(update.getCallbackQuery().getMessage().getChatId()))
+                .messageId(update.getCallbackQuery().getMessage().getMessageId());
 
         StringBuilder builder = new StringBuilder();
         editMessageText.text("Пользователь " + main.getFrom().getUserName() + " не имеет доступа.");
 
         if (user == null) return editMessageText.build();
 
-        if (user.getLicense().equals("Administration")) builder.append("Добро пожаловать администратор ");
-        else if (user.getLicense().equals("User")) builder.append("Добро пожаловать ");
+        License license = new License(user.getLicense());
+
+        if (!license.isActive()) return editMessageText.build();
+
+        switch (license.level) {
+            case "Administration" -> builder.append("Добро пожаловать администратор ");
+            case "User" -> builder.append("Добро пожаловать ");
+            case "Tester" ->
+                    builder.append("Вы не зарегистрированы в системе, и имеете ограниченную лицензию\n   Лицензия истекает через: ")
+                            .append(license.toLogString()).append("\n\nДобро пожаловать ");
+        }
         builder.append(main.getFrom().getUserName()).append("!\n\n");
         if (Scripts.hasClient(main.getFrom().getId())) {
             builder.append("Используйте команду /reg <UUID> для добавления ПК в систему или выберите из доступных:");
