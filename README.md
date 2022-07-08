@@ -4,15 +4,19 @@
 
 ## Сервер
 
+# Актуальная версия: 4.1.0.4
+
 ### Telegram
 
 ## Клиент
+
+# Актуальная версия: 4.0.0-SNAPSHOT-2
 
 ### Launcher
 
 ## Карта проекта
 ```mermaid
 graph LR
-QCloud(QCloud) -- Server souce code --> QuasarCloudServer(Sever)
-QCloud -- Launcher souce code--> QuasarCloud(Launcher)
+QCloud(QCloud) -- Server souce code --> Server(QuasarCloudServer)
+QCloud -- Launcher souce code--> Launcher(QuasarCloud)
 ```

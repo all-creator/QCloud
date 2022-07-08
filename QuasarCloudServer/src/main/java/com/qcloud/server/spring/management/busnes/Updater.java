@@ -7,7 +7,7 @@ import java.io.File;
 @Deprecated(since = "4.0.0")
 public class Updater {
     @Getter
-    private static final String LAUNCHER_VERSION = "1.0.4-beta";
+    private static final String LAUNCHER_VERSION = "4.0.0-SNAPSHOT-2";
 
     public boolean check(String version){
         return !version.equals(getLAUNCHER_VERSION());
