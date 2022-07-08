@@ -9,7 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Download {
-    protected static final String URL = "http://easy-stars.ru:8081/";
+    protected static final String URL = "http://88.99.240.171:8081/";
     protected static final Gson parser = new Gson();
     protected String filename;
     protected String urlPath;

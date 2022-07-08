@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Logging {
 
-    private static final  String LOG_URL = "http://easy-stars.ru:8081/log";
+    private static final  String LOG_URL = "http://88.99.240.171:8081/log";
     protected static final Gson parser = new Gson();
     private final boolean sendLog;
     private final Client user;

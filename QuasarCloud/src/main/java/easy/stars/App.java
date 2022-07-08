@@ -37,7 +37,7 @@ public class App extends Application {
     public static final Config config = new Config();
     public static final Updater updater = new Updater();
     public static final Gson parser = new Gson();
-    public static final String MAIN_URL = "http://easy-stars.ru:8081/";
+    public static final String MAIN_URL = "http://88.99.240.171:8081/";
 
     @Override
     public synchronized void start(Stage stage) throws IOException {

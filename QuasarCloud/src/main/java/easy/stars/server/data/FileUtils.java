@@ -9,8 +9,7 @@ import java.nio.file.Paths;
 
 public class FileUtils {
     private static String property;
-    private static final String[] directoryNames = {"EasyStars", "QCloud"};
-    private static Path scr;
+    private static final String[] directoryNames = {"QCloud"};
     private static Path main;
     private static Path res;
     private static Path dat;
@@ -25,25 +24,17 @@ public class FileUtils {
 
     public static void createPath() throws IOException {
         setProperty();
-        scr = Paths.get(property, directoryNames[0]);
-        main = Paths.get(property, directoryNames[0], directoryNames[1]);
-        res = Paths.get(property, directoryNames[0], directoryNames[1], "resources");
-        dat = Paths.get(property, directoryNames[0], directoryNames[1], "property");
-        create(scr, main, res, dat);
+        main = Paths.get(property, directoryNames[0]);
+        res = Paths.get(property, directoryNames[0], "resources");
+        dat = Paths.get(property, directoryNames[0], "property");
+        create(main, res, dat);
     }
 
-    private static void create(Path scr, Path main, Path res, Path dat) throws IOException {
-        if (scr.toFile().exists()) {
-            if (!main.toFile().exists()) {
-                Files.createDirectory(main);
-                Files.createDirectory(dat);
-                Files.createDirectory(res);
-            } else {
-                if (!res.toFile().exists()) Files.createDirectory(res);
-                if (!dat.toFile().exists()) Files.createDirectory(dat);
-            }
+    private static void create(Path main, Path res, Path dat) throws IOException {
+        if (main.toFile().exists()) {
+            if (!res.toFile().exists()) Files.createDirectory(res);
+            if (!dat.toFile().exists()) Files.createDirectory(dat);
         } else {
-            Files.createDirectory(scr);
             Files.createDirectory(main);
             Files.createDirectory(dat);
             Files.createDirectory(res);
@@ -52,11 +43,11 @@ public class FileUtils {
 
 
     public static Path getDataPath(String path) {
-        return Paths.get(property, directoryNames[0], directoryNames[1], "property", path);
+        return Paths.get(property, directoryNames[0], "property", path);
     }
 
     public static Path getMainPath(String path) {
-        return Paths.get(property, directoryNames[0], directoryNames[1], path);
+        return Paths.get(property, directoryNames[0], path);
     }
 
     public static Path getMainPath() {
@@ -71,12 +62,8 @@ public class FileUtils {
         return dat;
     }
 
-    public static Path getScrPath() {
-        return scr;
-    }
-
     public static Path getResPath(String path) {
-        return Paths.get(property, directoryNames[0], directoryNames[1], "resources", path);
+        return Paths.get(property, directoryNames[0], "resources", path);
     }
 
     private FileUtils() {
