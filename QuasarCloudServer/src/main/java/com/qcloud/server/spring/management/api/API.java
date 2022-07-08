@@ -3,8 +3,11 @@ package com.qcloud.server.spring.management.api;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 @Deprecated(since = "3.0.0")
 public class API {
@@ -42,18 +45,19 @@ public class API {
     public static boolean getLicense(String by, String text){
         Actions action = Actions.GET;
         URL url = new URL(URL + URL_USER_GET + "?" + TOKEN + "&" + action.getAction() + "&by=" + by + "&by_text=" + text);
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            String[] inputLineArray = inputLine.replace("{", "").replace("}", "").split(",");
-            for (String s : inputLineArray) {
-                if (s.startsWith("\"status\":")) {
-                    System.out.println(s.split(":")[1].equals(" \"successful\""));
-                    return s.split(":")[1].equals(" \"successful\"");
+        try {
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                String[] inputLineArray = inputLine.replace("{", "").replace("}", "").split(",");
+                for (String s : inputLineArray) {
+                    if (s.startsWith("\"status\":")) return s.split(":")[1].equals(" \"successful\"");
                 }
             }
+        } catch (IOException e) {
+            return false;
         }
         return false;
     }
