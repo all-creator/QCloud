@@ -27,7 +27,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class App extends Application {
@@ -45,7 +44,7 @@ public class App extends Application {
         scene.getStylesheets().addAll(Objects.requireNonNull(this.getClass().getResource("DarkTheme.css")).toExternalForm());
         App.stage = stage;
         stage.setTitle("Q CLOUD");
-        InputStream iconStream = App.class.getResourceAsStream("icon.jpeg");
+        InputStream iconStream = App.class.getResourceAsStream("icon.png");
         assert iconStream != null;
         stage.getIcons().add(new Image(iconStream));
         stage.setScene(scene);
@@ -73,8 +72,6 @@ public class App extends Application {
     public static void downloadResource() throws IOException {
         if (OSUtils.isWindows()) {
             Download download = new Download("nircmd.exe.zip", "res/download");
-            download.download();
-            download = new Download("QuasarSetup.exe.zip", "res/download");
             download.download();
             try {
                 Zip.extract(FileUtils.getResPath("nircmd.exe.zip").toFile(), FileUtils.getResPath().toFile());
@@ -124,8 +121,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        if (Arrays.asList(args).contains("-install")) launch();
-        else startServer();
+        launch();
     }
 }
 

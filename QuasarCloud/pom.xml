@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>easy.stars</groupId>
     <artifactId>QuasarCloud</artifactId>
-    <version>4.0.0-SNAPSHOT-2</version>
+    <version>4.0.2</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>15</maven.compiler.source>
@@ -67,6 +67,40 @@
                     <launcher>launcher</launcher>
                     <mainClass>easy.stars.App</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.5.2</version>
+
+                <configuration>
+                    <name>QCloud</name>
+                    <appVersion>${project.version}</appVersion>
+                    <vendor>app.org</vendor>
+                    <module>easy.stars/easy.stars.App</module>
+                    <runtimeImage>target/QuasarCloud</runtimeImage>
+                    <destination>target/jpackage</destination>
+                    <javaOptions>
+                        <option>--enable-preview</option>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>mac</id>
+                        <configuration>
+                            <icon>src/main/resources/icons/icon.icns</icon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>win</id>
+                        <configuration>
+                            <icon>src/main/resources/icons/icon.ico</icon>
+                            <winMenu>false</winMenu>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
