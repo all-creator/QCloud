@@ -12,18 +12,17 @@ public class Loader {
     Config config;
 
     public Config loadData() {
-        preLoad();
         loadConfig();
         return config;
     }
 
-    private void preLoad() {
+    public void preLoad() throws IOException {
         File file = Paths.get(System.getProperty("user.home"), "patch.est").toFile();
         try (FileInputStream readerStream = new FileInputStream(file)) {
             FileUtils.setProperty(new String(readerStream.readAllBytes()));
         }
         catch(IOException ex){
-            ex.printStackTrace();
+            throw new IOException("File " + file + " could not be find");
         }
     }
 

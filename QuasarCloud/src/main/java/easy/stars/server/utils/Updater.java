@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Updater extends Download {
 
-    public static final String VERSION = "4.0.0-SNAPSHOT-2";
+    public static final String VERSION = "4.0.2";
 
     public Updater() {
         super("QuasarCloud.zip", "update/download", "Content-Type", "application/zip");

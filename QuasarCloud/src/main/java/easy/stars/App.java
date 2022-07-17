@@ -38,6 +38,8 @@ public class App extends Application {
     public static final Gson parser = new Gson();
     public static final String MAIN_URL = "http://88.99.240.171:8081/";
 
+    private static final Loader loader = new Loader();
+
     @Override
     public synchronized void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("scene"), 600, 400);
@@ -89,7 +91,7 @@ public class App extends Application {
     }
 
     public static void startServer() {
-        Server server = new Server(new Loader().loadData());
+        Server server = new Server(loader.loadData());
         Server.setInstance(server);
         updater.checkUpdate();
         server.start();
@@ -121,7 +123,12 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        try {
+            loader.preLoad();
+            startServer();
+        } catch (IOException e) {
+            launch();
+        }
     }
 }
 

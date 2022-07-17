@@ -3,29 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="easy.stars.javafx.controllers.FinishController">
-   <children>
-      <Label layoutX="25.0" layoutY="14.0" prefHeight="55.0" prefWidth="551.0" text="Подайте запрос и введите в бота команду /reg &lt;UUID&gt;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font size="20.0" />
-         </font></Label>
-      <Label layoutX="119.0" layoutY="60.0" text="Перед этим убедитесь что сервер в состоянии онлайн">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Button fx:id="getOnline" layoutX="25.0" layoutY="98.0" mnemonicParsing="false" onAction="#getStatus" text="Проверка статуса сервера" />
-      <Button fx:id="complete" layoutX="271.0" layoutY="323.0" mnemonicParsing="false" onAction="#start" text="Готово" />
-      <Label fx:id="online" layoutX="248.0" layoutY="103.0" text="Статус сервера: Неизвестно">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Button fx:id="sendRegister" layoutX="248.0" layoutY="173.0" mnemonicParsing="false" onAction="#register" text="Подать запрос" />
-      <Label layoutX="175.0" layoutY="272.0" text="Команда будет скопирована в буфер обмена">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <Label fx:id="uuid" layoutX="177.0" layoutY="225.0" prefHeight="17.0" prefWidth="250.0" textAlignment="CENTER" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="easy.stars.javafx.controllers.FinishController">
+   <Label layoutX="25.0" layoutY="14.0" prefHeight="55.0" prefWidth="551.0"
+          text="Подайте запрос и введите в бота команду /reg &lt;UUID&gt;" AnchorPane.leftAnchor="25.0"
+          AnchorPane.topAnchor="14.0">
+      <font>
+         <Font size="20.0"/>
+      </font>
+   </Label>
+   <Label layoutX="119.0" layoutY="60.0" text="Перед этим убедитесь что сервер в состоянии онлайн">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+   <Button layoutX="25.0" layoutY="98.0" mnemonicParsing="false" onAction="#getStatus"
+           text="Проверка статуса сервера"/>
+   <Button layoutX="271.0" layoutY="323.0" mnemonicParsing="false" onAction="#start" text="Готово"/>
+   <Label fx:id="online" layoutX="248.0" layoutY="103.0" text="Статус сервера: Неизвестно">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <Button layoutX="248.0" layoutY="173.0" mnemonicParsing="false" onAction="#register"
+           text="Подать запрос"/>
+   <Label layoutX="175.0" layoutY="272.0" text="Команда будет скопирована в буфер обмена">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <Label fx:id="uuid" layoutX="177.0" layoutY="225.0" prefHeight="17.0" prefWidth="250.0" textAlignment="CENTER"/>
 </AnchorPane>
