@@ -34,6 +34,15 @@ public enum InlineKeyboard {
             );
         }
     },
+    OS_CHOOSE{
+        @Override
+        public InlineKeyboardMarkup getKeyboard() {
+            return ButtonAPI.createInlineKeyboard(
+                    new String[][]{{"Windows"}, {"MacOS"}},
+                    new String[][]{{"os:win"}, {"os:mac"}}
+            );
+        }
+    },
     ;
 
     public abstract InlineKeyboardMarkup getKeyboard();
