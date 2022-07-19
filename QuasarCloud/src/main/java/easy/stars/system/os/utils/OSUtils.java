@@ -1,5 +1,5 @@
-package easy.stars.system.utils;
-
+package easy.stars.system.os.utils;
+@Deprecated(since = "4.0.0")
 public class OSUtils {
 
     private static final String OS = System.getProperty("os.name").toLowerCase();

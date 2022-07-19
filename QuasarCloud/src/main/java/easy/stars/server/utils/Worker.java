@@ -4,7 +4,7 @@ import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
 import easy.stars.server.log.LocalSystemError;
 import easy.stars.server.object.Update;
-import easy.stars.system.utils.OSUtils;
+import easy.stars.system.os.utils.OSUtils;
 import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
@@ -112,7 +112,7 @@ public class Worker {
             shutdownCommand = "shutdown -"+args[1]+" " + t;
         } else if (OSUtils.isSolaris()){
             shutdownCommand = "shutdown -y -i5 -g" + t;
-            Server.getInstance().send("При работе на системе Solaris данная функция может работать не коректно");
+            Server.getInstance().send("При работе на системе Solaris данная функция может работать не корректно");
         } else {
             Server.getInstance().send(LocalSystemError.ERROR100.getInformation());
             return;

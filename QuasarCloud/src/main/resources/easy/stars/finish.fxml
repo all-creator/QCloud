@@ -32,5 +32,5 @@
          <Font size="14.0"/>
       </font>
    </Label>
-   <Label fx:id="uuid" layoutX="177.0" layoutY="225.0" prefHeight="17.0" prefWidth="250.0" textAlignment="CENTER"/>
+   <Label fx:id="uuid" layoutX="152.0" layoutY="225.0" prefHeight="17.0" prefWidth="350.0" textAlignment="CENTER"/>
 </AnchorPane>

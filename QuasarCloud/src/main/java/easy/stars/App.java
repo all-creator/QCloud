@@ -10,8 +10,9 @@ import easy.stars.server.object.RegisterClient;
 import easy.stars.server.utils.Download;
 import easy.stars.server.utils.Updater;
 import easy.stars.server.utils.Zip;
+import easy.stars.system.System;
 import easy.stars.system.identifier.ComputerIdentifier;
-import easy.stars.system.utils.OSUtils;
+import easy.stars.system.os.utils.OSUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +30,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
+// TODO: OS Separation, Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process)
+
 public class App extends Application {
+
+    public static System system;
 
     private static Scene scene;
     private static Stage stage;
@@ -123,6 +128,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        system = new System();
         try {
             loader.preLoad();
             startServer();

@@ -1,7 +1,7 @@
 package easy.stars.server.utils;
 
 import easy.stars.server.data.FileUtils;
-import easy.stars.system.utils.OSUtils;
+import easy.stars.system.os.utils.OSUtils;
 
 import java.io.IOException;
 
