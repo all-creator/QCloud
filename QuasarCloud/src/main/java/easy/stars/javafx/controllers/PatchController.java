@@ -10,10 +10,7 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.io.IOException;
 
-public class PachController {
-
-    public PachController() {
-    }
+public class PatchController extends AbstractFXController {
 
     @FXML
     private TextField hash;
@@ -22,14 +19,14 @@ public class PachController {
 
     @FXML
     public synchronized void buttonClicked() throws IOException {
-        if (App.config.getMainDirectory() == null) App.setRoot("error");
+        if (App.config.getMainDirectory() == null) App.setRoot(new ErrorController("Выбранная директория не найдена"));
         App.generateData();
         FileUtils.createPath();
         new Saver(App.config).saveData();
         App.updater.loadResource();
         App.downloadResource();
         App.loadResource();
-        App.setRoot("finish");
+        App.setRoot(new FinishController());
     }
 
     @FXML
@@ -40,7 +37,12 @@ public class PachController {
     }
 
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
-        directoryChooser.setTitle("Select Some Directories");
+        directoryChooser.setTitle("Укажите путь установки");
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+    }
+
+    @Override
+    public void prepare(Object[] args) {
+
     }
 }

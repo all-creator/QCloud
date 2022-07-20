@@ -4,8 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="easy.stars.javafx.controllers.ErrorController">
+<VBox prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="easy.stars.javafx.controllers.ErrorController">
    <Button mnemonicParsing="false" onAction="#buttonClicked" text="Выход" AnchorPane.leftAnchor="122.0"
            AnchorPane.topAnchor="120.0"/>
    <Label text="Произошла неизвестная ошибка" textAlignment="CENTER" AnchorPane.leftAnchor="5.0"
@@ -16,4 +16,4 @@
    </Label>
    <Label text="обратитесь в поддержку: http://easy-stars.ru/" textAlignment="CENTER" AnchorPane.leftAnchor="20.0"
           AnchorPane.topAnchor="80.0"/>
-</AnchorPane>
+</VBox>

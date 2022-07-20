@@ -1,6 +1,9 @@
 package easy.stars;
 
 import com.google.gson.Gson;
+import easy.stars.javafx.controllers.AbstractFXController;
+import easy.stars.javafx.controllers.ConnectionError;
+import easy.stars.javafx.controllers.MainController;
 import easy.stars.server.Config;
 import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
@@ -14,8 +17,6 @@ import easy.stars.system.System;
 import easy.stars.system.identifier.ComputerIdentifier;
 import easy.stars.system.os.utils.OSUtils;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -30,11 +31,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
-// TODO: OS Separation, Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process)
+// TODO: Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process)
 
 public class App extends Application {
 
-    public static System system;
+    public static final System system = new System();
 
     private static Scene scene;
     private static Stage stage;
@@ -47,11 +48,14 @@ public class App extends Application {
 
     @Override
     public synchronized void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("scene"), 600, 400);
-        scene.getStylesheets().addAll(Objects.requireNonNull(this.getClass().getResource("DarkTheme.css")).toExternalForm());
+        AbstractFXController res = new MainController();
+        if (!system.isConnected()) res = new ConnectionError();
+        scene = new Scene(res.loadFXML(), 600, 400);
+        res.loadCSS(scene);
+        scene.getStylesheets().addAll(Objects.requireNonNull(this.getClass().getResource("css/main.css")).toExternalForm());
         App.stage = stage;
-        stage.setTitle("Q CLOUD");
-        InputStream iconStream = App.class.getResourceAsStream("icon.png");
+        stage.setTitle("QCloud");
+        InputStream iconStream = App.class.getResourceAsStream("img/icon.png");
         assert iconStream != null;
         stage.getIcons().add(new Image(iconStream));
         stage.setScene(scene);
@@ -59,13 +63,9 @@ public class App extends Application {
         stage.show();
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static void setRoot(AbstractFXController controller) throws IOException {
+        scene.setRoot(controller.loadFXML());
+        controller.prepare(scene);
     }
 
     public static void generateData() {
@@ -128,7 +128,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        system = new System();
+        system.start();
         try {
             loader.preLoad();
             startServer();

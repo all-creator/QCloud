@@ -1,7 +1,7 @@
 package easy.stars.system.os.interfaces;
 
+import easy.stars.system.os.object.Dependency;
 import easy.stars.system.os.object.SystemInformation;
-import easy.stars.system.os.utils.Dependency;
 
 import java.nio.file.Paths;
 import java.util.List;

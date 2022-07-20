@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class FinishController {
-
-    public FinishController() {
-    }
+public class FinishController extends AbstractFXController{
 
     @FXML
     private Label online;
@@ -47,5 +44,10 @@ public class FinishController {
         ClipboardContent content = new ClipboardContent();
         content.putString("/reg " + App.config.getClient().getUuid().toString());
         clipboard.setContent(content);
+    }
+
+    @Override
+    public void prepare(Object[] args) {
+
     }
 }

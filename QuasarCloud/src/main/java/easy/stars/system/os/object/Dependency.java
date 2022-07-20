@@ -1,4 +1,4 @@
-package easy.stars.system.os.utils;
+package easy.stars.system.os.object;
 
 public class Dependency {
 

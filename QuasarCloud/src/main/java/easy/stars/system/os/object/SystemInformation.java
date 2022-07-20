@@ -7,10 +7,10 @@ import oshi.software.os.OperatingSystem;
 
 public abstract class SystemInformation {
 
-    public static final OperatingSystem SOFTWARE = new SystemInfo().getOperatingSystem();
-    public static final HardwareAbstractionLayer HARDWARE = new SystemInfo().getHardware();
+    protected static final OperatingSystem SOFTWARE = new SystemInfo().getOperatingSystem();
+    protected static final HardwareAbstractionLayer HARDWARE = new SystemInfo().getHardware();
 
-    public String getInfo() {
+    protected String getInfo() {
         return I18n.Messages.OS_INFO.getMessage()
                 .formatted(
                         System.getProperty("user.name"),
@@ -35,7 +35,7 @@ public abstract class SystemInformation {
                 );
     }
 
-    public String getFullInfo() {
+    protected String getFullInfo() {
         return I18n.Messages.OS_FULL_INFO.getMessage()
                 .formatted(
                         SOFTWARE.getFamily(),
@@ -44,5 +44,9 @@ public abstract class SystemInformation {
                         SOFTWARE.getVersionInfo().getCodeName(),
                         SOFTWARE.getBitness()
                 );
+    }
+
+    public static String getHardwareUUID() {
+        return HARDWARE.getComputerSystem().getHardwareUUID();
     }
 }
