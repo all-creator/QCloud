@@ -9,8 +9,12 @@ import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.io.IOException;
-
+@Deprecated(since = "4.0.15")
 public class PatchController extends AbstractFXController {
+
+    public PatchController() {
+        setScene("path");
+    }
 
     @FXML
     private TextField hash;
@@ -19,14 +23,14 @@ public class PatchController extends AbstractFXController {
 
     @FXML
     public synchronized void buttonClicked() throws IOException {
-        if (App.config.getMainDirectory() == null) App.setRoot(new ErrorController("Выбранная директория не найдена"));
+        if (App.config.getMainDirectory() == null) App.setRoot(new Error());
         App.generateData();
         FileUtils.createPath();
         new Saver(App.config).saveData();
         App.updater.loadResource();
         App.downloadResource();
         App.loadResource();
-        App.setRoot(new FinishController());
+        App.setRoot(new Register());
     }
 
     @FXML
@@ -39,10 +43,5 @@ public class PatchController extends AbstractFXController {
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
         directoryChooser.setTitle("Укажите путь установки");
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-    }
-
-    @Override
-    public void prepare(Object[] args) {
-
     }
 }

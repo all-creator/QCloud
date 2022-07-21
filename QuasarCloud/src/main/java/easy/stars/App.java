@@ -2,8 +2,6 @@ package easy.stars;
 
 import com.google.gson.Gson;
 import easy.stars.javafx.controllers.AbstractFXController;
-import easy.stars.javafx.controllers.ConnectionError;
-import easy.stars.javafx.controllers.MainController;
 import easy.stars.server.Config;
 import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
@@ -31,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
-// TODO: Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process)
+// TODO: Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process), unite Error window
 
 public class App extends Application {
 
@@ -48,8 +46,7 @@ public class App extends Application {
 
     @Override
     public synchronized void start(Stage stage) throws IOException {
-        AbstractFXController res = new MainController();
-        if (!system.isConnected()) res = new ConnectionError();
+        AbstractFXController res = system.getMainController();
         scene = new Scene(res.loadFXML(), 600, 400);
         res.loadCSS(scene);
         scene.getStylesheets().addAll(Objects.requireNonNull(this.getClass().getResource("css/main.css")).toExternalForm());
@@ -61,6 +58,17 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public static void restart() {
+        system.start();
+        AbstractFXController res = system.getMainController();
+        try {
+            setRoot(res);
+        } catch (IOException e) {
+            e.printStackTrace();
+            assert true;
+        }
     }
 
     public static void setRoot(AbstractFXController controller) throws IOException {
