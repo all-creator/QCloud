@@ -28,6 +28,25 @@ public class SunOS implements OperationSystem {
     }
 
     @Override
+    public void createMainPath() {
+
+    }
+
+    @Override
+    public void createLibsPath() {
+
+    }
+
+    @Override
+    public void createResourcePath() {
+    }
+
+    @Override
+    public void registerPaths() {
+
+    }
+
+    @Override
     public List<Dependency> getDependencies() {
         return null;
     }

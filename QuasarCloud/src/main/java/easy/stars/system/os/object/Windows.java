@@ -15,18 +15,43 @@ public class Windows extends SystemInformation implements OperationSystem {
     }
 
     @Override
-    public Paths getMainPath() {
-        return null;
+    public Path getMainPath() {
+        if (new File(Path.of("C:\\Program Files").toUri()).exists()) {
+            return Paths.get("C:\\Program Files\\QCloud");
+        } else {
+            return Path.of(System.getProperty("user.home"), "QCloud");
+        }
+    }
+    @Override
+    public Path getResourcePath() {
+        return Path.of(getMainPath().toString(), "res");
     }
 
     @Override
-    public Paths getResourcePath() {
-        return null;
+    public Path getLibsPath() {
+        return Path.of(getMainPath().toString(), "lib");
     }
 
     @Override
-    public Paths getLibsPath() {
-        return null;
+    public void createMainPath() {
+        new File(getMainPath().toUri()).mkdir();
+    }
+
+    @Override
+    public void createLibsPath() {
+        new File(getLibsPath().toUri()).mkdir();
+    }
+
+    @Override
+    public void createResourcePath() {
+        new File(getResourcePath().toUri()).mkdir();
+    }
+
+    @Override
+    public void registerPaths() {
+        createMainPath();
+        createLibsPath();
+        createResourcePath();
     }
 
     @Override
