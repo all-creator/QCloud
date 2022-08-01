@@ -1,5 +1,7 @@
 package easy.stars.system.identifier;
 
+import easy.stars.system.os.object.SystemInformation;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
@@ -10,7 +12,9 @@ import java.util.UUID;
 
 public class ComputerIdentifier {
 
-    public static Client generateLicenseKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private ComputerIdentifier() {}
+
+    public static LicenseKey generateLicenseKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
         UUID uuid = UUID.randomUUID();
         SecureRandom random = new SecureRandom();
         byte[]salt = new byte[16];
@@ -18,7 +22,14 @@ public class ComputerIdentifier {
         KeySpec spec = new PBEKeySpec(uuid.toString().toCharArray(), salt, 6553, 128);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hash = factory.generateSecret(spec).getEncoded();
-        return new Client(uuid, hash, salt);
+        return new LicenseKey(uuid, SystemInformation.getHardwareUUID(), hash, salt);
+    }
+
+    public static class LicenseKeyException extends RuntimeException {
+
+        public LicenseKeyException(String message) {
+            super(message);
+        }
     }
 
 }

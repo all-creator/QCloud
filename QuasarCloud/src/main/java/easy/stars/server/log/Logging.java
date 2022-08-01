@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import easy.stars.server.Config;
 import easy.stars.server.object.LogMessage;
 import easy.stars.server.utils.Updater;
-import easy.stars.system.identifier.Client;
+import easy.stars.system.identifier.LicenseKey;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,9 +18,9 @@ public class Logging {
     private static final  String LOG_URL = "http://88.99.240.171:8081/log";
     protected static final Gson parser = new Gson();
     private final boolean sendLog;
-    private final Client user;
+    private final LicenseKey user;
 
-    public Logging(boolean sendLog, Client user) {
+    public Logging(boolean sendLog, LicenseKey user) {
         this.sendLog = sendLog;
         this.user = user;
     }

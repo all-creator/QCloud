@@ -1,7 +1,7 @@
 package easy.stars;
 
 import com.google.gson.Gson;
-import easy.stars.javafx.controllers.AbstractFXController;
+import easy.stars.javafx.AbstractFXController;
 import easy.stars.server.Config;
 import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
@@ -41,7 +41,6 @@ public class App extends Application {
     public static final Updater updater = new Updater();
     public static final Gson parser = new Gson();
     public static final String MAIN_URL = "http://88.99.240.171:8081/";
-
     private static final Loader loader = new Loader();
 
     @Override

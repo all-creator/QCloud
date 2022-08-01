@@ -1,39 +1,34 @@
 package easy.stars.system.os.object;
 
 import easy.stars.system.os.interfaces.OperationSystem;
-import easy.stars.system.os.interfaces.SoundController;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 
 public class SunOS implements OperationSystem {
+
     @Override
     public SystemInformation getInformation() {
         return null;
     }
 
     @Override
-    public Paths getMainPath() {
+    public Path getMainPath() {
         return null;
     }
 
     @Override
-    public Paths getResourcePath() {
+    public Path getResourcePath() {
         return null;
     }
 
     @Override
-    public Paths getLibsPath() {
+    public Path getLibsPath() {
         return null;
     }
 
     @Override
     public List<Dependency> getDependencies() {
-        return null;
-    }
-
-    @Override
-    public SoundController getSoundController() {
         return null;
     }
 }

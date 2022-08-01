@@ -1,9 +1,8 @@
 package easy.stars.system.os.object;
 
 import easy.stars.system.os.interfaces.OperationSystem;
-import easy.stars.system.os.interfaces.SoundController;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 
 public class Unix implements OperationSystem {
@@ -13,27 +12,41 @@ public class Unix implements OperationSystem {
     }
 
     @Override
-    public Paths getMainPath() {
+    public Path getMainPath() {
         return null;
     }
 
     @Override
-    public Paths getResourcePath() {
+    public Path getResourcePath() {
         return null;
     }
 
     @Override
-    public Paths getLibsPath() {
+    public Path getLibsPath() {
         return null;
+    }
+
+    @Override
+    public void createMainPath() {
+
+    }
+
+    @Override
+    public void createLibsPath() {
+
+    }
+
+    @Override
+    public void createResourcePath() {
+    }
+
+    @Override
+    public void registerPaths() {
+
     }
 
     @Override
     public List<Dependency> getDependencies() {
-        return null;
-    }
-
-    @Override
-    public SoundController getSoundController() {
         return null;
     }
 }

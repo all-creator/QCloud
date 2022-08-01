@@ -1,5 +1,6 @@
-package easy.stars.javafx.controllers;
+package easy.stars.javafx.controllers.errors;
 
+import easy.stars.javafx.AbstractFXController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

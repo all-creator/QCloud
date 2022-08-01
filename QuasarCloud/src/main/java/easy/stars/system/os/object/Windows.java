@@ -1,8 +1,9 @@
 package easy.stars.system.os.object;
 
 import easy.stars.system.os.interfaces.OperationSystem;
-import easy.stars.system.os.interfaces.SoundController;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -30,11 +31,6 @@ public class Windows extends SystemInformation implements OperationSystem {
 
     @Override
     public List<Dependency> getDependencies() {
-        return null;
-    }
-
-    @Override
-    public SoundController getSoundController() {
         return null;
     }
 }

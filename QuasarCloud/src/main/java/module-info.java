@@ -8,9 +8,12 @@ open module easy.stars {
     exports easy.stars.server.utils;
     exports easy.stars.system;
     exports easy.stars.system.identifier;
+    exports easy.stars.system.os;
     exports easy.stars.system.os.interfaces;
     exports easy.stars.system.os.utils;
     exports easy.stars.system.os.object;
+    exports easy.stars.javafx;
+    exports easy.stars.javafx.controllers.errors;
 
     requires javafx.controls;
     requires javafx.fxml;

@@ -8,7 +8,7 @@
       xmlns:fx="http://javafx.com/fxml"
       id="window"
       alignment="CENTER"
-      fx:controller="easy.stars.javafx.controllers.NetworkError"
+      fx:controller="easy.stars.javafx.controllers.errors.NetworkError"
       prefHeight="400.0" prefWidth="600.0">
     <ImageView fx:id="networkErrorImg"/>
     <Label id="ConnectionErrorLabel" text="Похоже вы не подключены к сети" textAlignment="CENTER"/>

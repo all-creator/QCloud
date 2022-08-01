@@ -1,9 +1,9 @@
 package easy.stars.system.os.object;
 
 import easy.stars.system.os.interfaces.OperationSystem;
-import easy.stars.system.os.interfaces.SoundController;
 
-import java.nio.file.Paths;
+import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 public class MacOS extends SystemInformation implements OperationSystem {
@@ -14,27 +14,44 @@ public class MacOS extends SystemInformation implements OperationSystem {
     }
 
     @Override
-    public Paths getMainPath() {
-        return null;
+    public Path getMainPath() {
+        return Path.of(System.getProperty("user.home"), "Library", "QCloud");
     }
 
     @Override
-    public Paths getResourcePath() {
-        return null;
+    public Path getResourcePath() {
+        return Path.of(getMainPath().toString(), "Resource");
     }
 
     @Override
-    public Paths getLibsPath() {
-        return null;
+    public Path getLibsPath() {
+        return Path.of(getMainPath().toString(), "Libs");
+    }
+
+    @Override
+    public void createMainPath() {
+        new File(getMainPath().toUri()).mkdir();
+    }
+
+    @Override
+    public void createLibsPath() {
+        new File(getLibsPath().toUri()).mkdir();
+    }
+
+    @Override
+    public void createResourcePath() {
+        new File(getResourcePath().toUri()).mkdir();
+    }
+
+    @Override
+    public void registerPaths() {
+        createMainPath();
+        createResourcePath();
+        createLibsPath();
     }
 
     @Override
     public List<Dependency> getDependencies() {
-        return null;
-    }
-
-    @Override
-    public SoundController getSoundController() {
         return null;
     }
 }

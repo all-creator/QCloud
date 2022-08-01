@@ -1,6 +1,6 @@
 package easy.stars.server;
 
-import easy.stars.system.identifier.Client;
+import easy.stars.system.identifier.LicenseKey;
 import easy.stars.system.os.utils.OSUtils;
 
 import java.io.File;
@@ -8,15 +8,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Config {
     List<String> settings = new ArrayList<>();
-    private Client client;
+    private LicenseKey licenseKey;
     private String mainDirectory;
 
-    public Config(List<String> settings, Client client, File mainDirectory) {
+    public Config(List<String> settings, LicenseKey licenseKey, File mainDirectory) {
         this.settings = settings;
-        this.client = client;
+        this.licenseKey = licenseKey;
         this.mainDirectory = mainDirectory.getAbsolutePath();
     }
 
@@ -73,12 +74,12 @@ public class Config {
         }
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(LicenseKey licenseKey) {
+        this.licenseKey = licenseKey;
     }
 
-    public Client getClient() {
-        return client;
+    public LicenseKey getClient() {
+        return licenseKey;
     }
 
     public String getMainDirectory() {
@@ -108,15 +109,15 @@ public class Config {
 
         Config config = (Config) o;
 
-        if (settings != null ? !settings.equals(config.settings) : config.settings != null) return false;
-        if (client != null ? !client.equals(config.client) : config.client != null) return false;
-        return mainDirectory != null ? mainDirectory.equals(config.mainDirectory) : config.mainDirectory == null;
+        if (!Objects.equals(settings, config.settings)) return false;
+        if (!Objects.equals(licenseKey, config.licenseKey)) return false;
+        return Objects.equals(mainDirectory, config.mainDirectory);
     }
 
     @Override
     public int hashCode() {
         int result = settings != null ? settings.hashCode() : 0;
-        result = 31 * result + (client != null ? client.hashCode() : 0);
+        result = 31 * result + (licenseKey != null ? licenseKey.hashCode() : 0);
         result = 31 * result + (mainDirectory != null ? mainDirectory.hashCode() : 0);
         return result;
     }
@@ -125,7 +126,7 @@ public class Config {
     public String toString() {
         return "{" +
                 "settings: " + settings +
-                ", client: " + client +
+                ", client: " + licenseKey +
                 ", mainDirectory: " + mainDirectory +
                 '}';
     }

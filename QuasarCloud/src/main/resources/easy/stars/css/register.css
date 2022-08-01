@@ -1,0 +1,23 @@
+#window {
+    -fx-alignment: center;
+}
+
+#uuid {
+    -fx-border-width: 0;
+    -fx-max-height: 300px;
+}
+
+.label {
+    -fx-padding: 10px;
+}
+
+#label {
+    -fx-font-size: 21px;
+    -fx-text-alignment: center;
+}
+
+#prompt {
+    -fx-text-fill: #3b3b3b;
+    -fx-font-size: 10px;
+    -fx-padding: 15px;
+}

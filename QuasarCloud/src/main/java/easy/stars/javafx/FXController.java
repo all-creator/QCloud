@@ -1,4 +1,4 @@
-package easy.stars.javafx.controllers;
+package easy.stars.javafx;
 
 public interface FXController {
     void prepare(Object[] args);

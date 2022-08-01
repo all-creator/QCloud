@@ -1,15 +1,16 @@
 package easy.stars.server.object;
 
-import easy.stars.system.identifier.Client;
+import easy.stars.system.identifier.LicenseKey;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class RegisterClient {
     String uuid;
     byte[] hash;
 
-    public RegisterClient(Client client) {
-        uuid = client.getUuid().toString();
+    public RegisterClient(LicenseKey client) {
+        uuid = client.getUuid_global().toString();
         hash = client.getHash();
     }
 
@@ -36,7 +37,7 @@ public class RegisterClient {
 
         RegisterClient registerClient = (RegisterClient) o;
 
-        if (uuid != null ? !uuid.equals(registerClient.uuid) : registerClient.uuid != null) return false;
+        if (!Objects.equals(uuid, registerClient.uuid)) return false;
         return Arrays.equals(hash, registerClient.hash);
     }
 
