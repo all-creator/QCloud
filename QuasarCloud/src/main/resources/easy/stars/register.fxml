@@ -9,7 +9,7 @@
    <Label fx:id="online" layoutX="248.0" layoutY="103.0" text="Статус сервера: Неизвестно"/>
    <Button fx:id="btnRegister" layoutX="248.0" layoutY="173.0" mnemonicParsing="false" onAction="#sendRegister"
            text="Получить ключ"/>
-   <TextField fx:id="uuid_global" layoutY="225.0" prefHeight="17.0" prefWidth="350.0" disable="true">
+   <TextField fx:id="uuid" layoutY="225.0" prefHeight="17.0" prefWidth="350.0" disable="true">
       <VBox.margin>
          <Insets>
             <bottom>20</bottom>

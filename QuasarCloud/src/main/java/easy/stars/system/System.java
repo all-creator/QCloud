@@ -8,24 +8,13 @@ import easy.stars.system.identifier.LicenseKey;
 import easy.stars.system.os.OSController;
 import oshi.SystemInfo;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
 public class System {
 
     AbstractFXController mainController = null;
 
     final OSController osController = new OSController();
 
-    final LicenseKey licenseKey;
-
-    public System() {
-        try {
-            licenseKey = ComputerIdentifier.generateLicenseKey();
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new ComputerIdentifier.LicenseKeyException("Failed try to generate a license key");
-        }
-    }
+    LicenseKey licenseKey;
 
 
     public void start() {
@@ -34,14 +23,25 @@ public class System {
             if (a.getIPv4addr().length > 0) {
                 mainController = new EULA();
                 osController.getCurrentOS().registerPaths();
+                update();//TODO: update if necessary
+                licenseKey = ComputerIdentifier.getLicenseKey();
+                connect();//TODO: get UUID from OSHI Hardware and check if it on server side. if not - install
+
+                //TODO: check files, if not - install, if yes - load system UUID and check it on server side.
+
+                //TODO: if yes - load, if not - register
             }
         });
     }
 
-    //TODO: update if necessary
-    //TODO: get UUID from OSHI Hardware and check if it on server side. if not - install
-    //TODO: check files, if not - install, if yes - load system UUID and check it on server side.
-    //TODO: if yes - load, if not - register
+    private void update() {
+
+    }
+
+    private void connect() {
+
+    }
+
 
 
     public OSController getOsController() {

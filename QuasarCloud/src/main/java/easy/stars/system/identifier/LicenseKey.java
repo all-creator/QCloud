@@ -1,27 +1,21 @@
 package easy.stars.system.identifier;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class LicenseKey implements Serializable {
-    UUID uuidGlobal;
+    String uuidGlobal;
     String uuidLocal;
-    byte[] hash;
-    byte[] salt;
+    byte[] uuid;
 
-    public LicenseKey(UUID uuidGlobal, String uuidLocal, byte[] hash, byte[] salt) {
+    public LicenseKey(String uuidGlobal, String uuidLocal, byte[] uuid) {
         this.uuidGlobal = uuidGlobal;
         this.uuidLocal = uuidLocal;
-        this.hash = hash;
-        this.salt = salt;
+        this.uuid = uuid;
     }
 
-    public UUID getUuidGlobal() {
-        return uuidGlobal;
-    }
-
-    public void setUuidGlobal(UUID uuidGlobal) {
+    public LicenseKey(String uuidGlobal, String uuidLocal) {
         this.uuidGlobal = uuidGlobal;
+        this.uuidLocal = uuidLocal;
     }
 
     public String getUuidLocal() {
@@ -32,19 +26,19 @@ public class LicenseKey implements Serializable {
         this.uuidLocal = uuidLocal;
     }
 
-    public byte[] getHash() {
-        return hash;
+    public String getUuidGlobal() {
+        return uuidGlobal;
     }
 
-    public byte[] getSalt() {
-        return salt;
+    public void setUuidGlobal(String uuidGlobal) {
+        this.uuidGlobal = uuidGlobal;
     }
 
-    public void setHash(byte[] hash) {
-        this.hash = hash;
+    public byte[] getUuid() {
+        return uuid;
     }
 
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
+    public void setUuid(byte[] uuid) {
+        this.uuid = uuid;
     }
 }

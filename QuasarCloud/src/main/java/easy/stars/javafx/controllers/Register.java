@@ -27,7 +27,7 @@ public class Register extends AbstractFXController implements Initializable {
     public Label prompt;
 
     @FXML
-    private TextField uuid;
+    public TextField uuid;
 
     @FXML
     private Button btnRegister;
@@ -46,12 +46,11 @@ public class Register extends AbstractFXController implements Initializable {
 
     @FXML
     public void sendRegister() {
-        App.register();
         uuid.setDisable(false);
-        uuid.setText(App.config.getClient().getUuid_global().toString());
+        uuid.setText(new String(App.system.getLicenseKey().getUuid()));
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-        content.putString("/reg " + App.config.getClient().getUuid_global().toString());
+        content.putString("/reg " + new String(App.system.getLicenseKey().getUuid()));
         clipboard.setContent(content);
         btnFinish.setDisable(false);
         prompt.setText("Команда скопирована в буфер обмена");

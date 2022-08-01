@@ -10,8 +10,8 @@ public class RegisterClient {
     byte[] hash;
 
     public RegisterClient(LicenseKey client) {
-        uuid = client.getUuid_global().toString();
-        hash = client.getHash();
+        uuid = client.getUuidGlobal();
+        hash = client.getUuid();
     }
 
     public String getUuid() {

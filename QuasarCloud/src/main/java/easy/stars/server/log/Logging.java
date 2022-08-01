@@ -37,11 +37,11 @@ public class Logging {
     }
 
     public void logIn(LogBase obj){
-        if (sendLog) log(parser.toJson(new LogMessage(Updater.VERSION, user.getHash(), obj.getMessage())));
+        if (sendLog) log(parser.toJson(new LogMessage(Updater.VERSION, user.getUuid(), obj.getMessage())));
     }
 
     public void logIn(String obj){
-        if (sendLog) log(parser.toJson(new LogMessage(Updater.VERSION, user.getHash(), obj)));
+        if (sendLog) log(parser.toJson(new LogMessage(Updater.VERSION, user.getUuid(), obj)));
     }
 
     private void log(String str){

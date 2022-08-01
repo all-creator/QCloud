@@ -12,7 +12,6 @@ import easy.stars.server.utils.Download;
 import easy.stars.server.utils.Updater;
 import easy.stars.server.utils.Zip;
 import easy.stars.system.System;
-import easy.stars.system.identifier.ComputerIdentifier;
 import easy.stars.system.os.utils.OSUtils;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -25,8 +24,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Objects;
 
 // TODO: Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process), unite Error window
@@ -75,14 +72,6 @@ public class App extends Application {
         controller.prepare(scene);
     }
 
-    public static void generateData() {
-        try {
-            config.setClient(ComputerIdentifier.generateLicenseKey());
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void downloadResource() throws IOException {
         if (OSUtils.isWindows()) {
             Download download = new Download("nircmd.exe.zip", "res/download");
@@ -96,10 +85,6 @@ public class App extends Application {
             } catch (Exception ignored) {
             }
         }
-    }
-
-    public static void loadResource() throws IOException {
-        if (OSUtils.isWindows()) Runtime.getRuntime().exec(new String[]{FileUtils.getResPath("QuasarSetup.exe").toAbsolutePath().toString()});
     }
 
     public static void startServer() {
@@ -136,12 +121,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         system.start();
-        try {
-            loader.preLoad();
-            startServer();
-        } catch (IOException e) {
-            launch();
-        }
+        launch();
     }
 }
 

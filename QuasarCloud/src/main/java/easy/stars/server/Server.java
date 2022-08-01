@@ -34,7 +34,7 @@ public final class Server {
     }
 
     public void send(String message) throws IOException {
-        String gson = parser.toJson(new TelegramMessage(message, config.getClient().getHash()));
+        String gson = parser.toJson(new TelegramMessage(message, config.getClient().getUuid()));
         byte[] out = gson.getBytes(StandardCharsets.UTF_8);
         int length = out.length;
         URL url = new URL(MAIN_URL + "tg/send");
@@ -54,7 +54,7 @@ public final class Server {
         Thread run = new Thread (() -> {
             while (true) {
                 try {
-                    String gson = parser.toJson(new Hash(config.getClient().getHash()));
+                    String gson = parser.toJson(new Hash(config.getClient().getUuid()));
                     byte[] out = gson.getBytes(StandardCharsets.UTF_8);
                     int length = out.length;
                     URL url = new URL(MAIN_URL + "tg/update");
