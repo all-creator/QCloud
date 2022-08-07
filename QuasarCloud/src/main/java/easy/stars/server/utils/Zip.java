@@ -1,15 +1,14 @@
 package easy.stars.server.utils;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class Zip {
     private static final int  BUFFER_SIZE = 4096;
+
+    private Zip() {
+    }
 
     private static void extractFile(ZipInputStream in, File outdir, String name) throws IOException {
         byte[] buffer = new byte[BUFFER_SIZE];
@@ -24,41 +23,38 @@ public class Zip {
         }
     }
 
-    private static void mkdirs(File outdir,String path)
-    {
-        File d = new File(outdir, path);
-        if( !d.exists() )
-            d.mkdirs();
+    private static boolean mkdirs(File outDir, String path) {
+        File d = new File(outDir, path);
+        return d.mkdirs();
     }
 
-    private static String dirpart(String name)
+    private static String dirPart(String name)
     {
         int s = name.lastIndexOf( File.separatorChar );
         return s == -1 ? null : name.substring( 0, s );
     }
 
-    public static void extract(File zipfile, File outdir)
+    public static void extract(File zipfile, File outDir)
     {
-        try
+        try (ZipInputStream zin = new ZipInputStream(new FileInputStream(zipfile)))
         {
-            ZipInputStream zin = new ZipInputStream(new FileInputStream(zipfile));
             ZipEntry entry;
-            String name, dir;
+            String name;
+            String dir;
             while ((entry = zin.getNextEntry()) != null)
             {
                 name = entry.getName();
                 if( entry.isDirectory() )
                 {
-                    mkdirs(outdir,name);
+                    mkdirs(outDir,name);
                     continue;
                 }
-                dir = dirpart(name);
+                dir = dirPart(name);
                 if( dir != null )
-                    mkdirs(outdir,dir);
+                    mkdirs(outDir,dir);
 
-                extractFile(zin, outdir, name);
+                extractFile(zin, outDir, name);
             }
-            zin.close();
         }
         catch (IOException e)
         {

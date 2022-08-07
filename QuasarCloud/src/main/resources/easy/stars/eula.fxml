@@ -11,6 +11,6 @@
       fx:controller="easy.stars.javafx.controllers.EULA">
    <CheckBox fx:id="agree" onAction="#eulaNoAccept" mnemonicParsing="false" selected="true" text="Я прочитал и принимаю лицензионное соглашение и политику компании"/>
    <CheckBox fx:id="log" mnemonicParsing="false" selected="true" text="Отправлять данные об ошибках на сервер"/>
-   <Button fx:id="continue_b" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#buttonClicked" text="Продолжить" textAlignment="CENTER"/>
+   <Button fx:id="continueBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#buttonClicked" text="Продолжить" textAlignment="CENTER"/>
    <Label fx:id="warning"/>
 </VBox>

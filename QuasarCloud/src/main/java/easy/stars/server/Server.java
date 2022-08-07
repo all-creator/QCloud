@@ -1,12 +1,10 @@
 package easy.stars.server;
 
+import easy.stars.App;
 import easy.stars.server.log.LogBase;
 import easy.stars.server.log.Logging;
 import easy.stars.server.log.LoggingNotSupportFormat;
-import easy.stars.server.object.Hash;
-import easy.stars.server.object.LogMessage;
-import easy.stars.server.object.TelegramMessage;
-import easy.stars.server.object.Update;
+import easy.stars.server.object.*;
 import easy.stars.server.utils.Worker;
 
 import java.io.BufferedReader;
@@ -18,10 +16,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
-import static easy.stars.App.MAIN_URL;
 import static easy.stars.App.parser;
 
 public final class Server {
+
+    public static final String MAIN_URL = "http://88.99.240.171:8081/";
 
     static Server instance;
     Config config;
@@ -58,8 +57,7 @@ public final class Server {
                     byte[] out = gson.getBytes(StandardCharsets.UTF_8);
                     int length = out.length;
                     URL url = new URL(MAIN_URL + "tg/update");
-                    URLConnection con = url.openConnection();
-                    HttpURLConnection http = (HttpURLConnection) con;
+                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
                     http.setRequestMethod("POST");
                     http.setDoOutput(true);
                     http.setFixedLengthStreamingMode(length);
@@ -99,6 +97,26 @@ public final class Server {
         else if (logging instanceof LogMessage) logger.logIn((LogMessage) logging);
         else if (logging instanceof String) logger.logIn((String) logging);
         else throw new LoggingNotSupportFormat("Не поддерживаемый формат логирования: "+logging.getClass().getName());
+    }
+
+    public static void register() {
+        String gson = parser.toJson(new RegisterClient(App.config.getClient()));
+        byte[] out = gson.getBytes(StandardCharsets.UTF_8);
+        int length = out.length;
+        try {
+            java.net.URL url = new URL(MAIN_URL + "tg/register");
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.setFixedLengthStreamingMode(length);
+            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            http.connect();
+            try(OutputStream os = http.getOutputStream()) {
+                os.write(out);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Config getConfig() {

@@ -7,7 +7,6 @@ import easy.stars.server.Server;
 import easy.stars.server.data.FileUtils;
 import easy.stars.server.data.Loader;
 import easy.stars.server.log.LogBase;
-import easy.stars.server.object.RegisterClient;
 import easy.stars.server.utils.Download;
 import easy.stars.server.utils.Updater;
 import easy.stars.server.utils.Zip;
@@ -20,11 +19,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.MissingFormatArgumentException;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 // TODO: Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process), unite Error window
 
@@ -37,7 +35,6 @@ public class App extends Application {
     public static final Config config = new Config();
     public static final Updater updater = new Updater();
     public static final Gson parser = new Gson();
-    public static final String MAIN_URL = "http://88.99.240.171:8081/";
     private static final Loader loader = new Loader();
 
     @Override
@@ -67,9 +64,18 @@ public class App extends Application {
         }
     }
 
+    private static void update() {
+        throw new MissingFormatArgumentException("Miss args update-skip");
+        // open -a QCloud.app --args update-skip
+    }
+
     public static void setRoot(AbstractFXController controller) throws IOException {
         scene.setRoot(controller.loadFXML());
         controller.prepare(scene);
+    }
+
+    public static Stage getStage() {
+        return stage;
     }
 
     public static void downloadResource() throws IOException {
@@ -95,33 +101,12 @@ public class App extends Application {
         server.getLogger().logIn(LogBase.SUCCESS_START_SERVER);
     }
 
-    public static void register() {
-        String gson = parser.toJson(new RegisterClient(config.getClient()));
-        byte[] out = gson.getBytes(StandardCharsets.UTF_8);
-        int length = out.length;
-        try {
-            java.net.URL url = new URL(MAIN_URL + "tg/register");
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
-            http.setRequestMethod("POST");
-            http.setDoOutput(true);
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try(OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Stage getStage() {
-        return stage;
-    }
-
     public static void main(String[] args) {
-        system.start();
-        launch();
+        Arrays.stream(args).anyMatch(Predicate.isEqual("--update-skip"));
+        if (true) {
+            system.start();
+            launch();
+        } else update();
     }
 }
 

@@ -27,12 +27,12 @@ public class EULA extends AbstractFXController {
     private Label warning;
 
     @FXML
-    private Button continue_b;
+    private Button continueBtn;
 
     @FXML
     public void buttonClicked() throws IOException {
         if (!agree.isSelected()) App.setRoot(new Error());
-        App.config.addSetting("sendlog:" + log.isSelected());
+        App.system.setSendLog(log.isSelected());
         App.setRoot(new Register());
     }
 
@@ -40,10 +40,10 @@ public class EULA extends AbstractFXController {
     public void eulaNoAccept() {
         if (!agree.isSelected()) {
             warning.setText("Для продолжения установки необходимо принять пользовательское соглашение");
-            continue_b.setDisable(true);
+            continueBtn.setDisable(true);
         } else {
             warning.setText("");
-            continue_b.setDisable(false);
+            continueBtn.setDisable(false);
         }
     }
 }

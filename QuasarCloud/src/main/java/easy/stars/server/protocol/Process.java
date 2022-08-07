@@ -1,4 +1,4 @@
-package easy.stars.system;
+package easy.stars.server.protocol;
 
 public abstract class Process {
 
