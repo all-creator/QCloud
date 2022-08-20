@@ -1,15 +1,24 @@
 package easy.stars.server.protocol;
 
+import javafx.application.Platform;
+
 public abstract class Process {
 
     final Runnable runnable;
     long theadID;
 
-    protected Process(Runnable process) {
-        this.runnable = () -> {
-            process.run();
-            postProcess();
-        };
+    protected Process(Runnable process, boolean fxUse) {
+        if (fxUse) {
+            this.runnable = () -> {
+                Platform.runLater(process);
+                postProcess();
+            };
+        } else  {
+            this.runnable = () -> {
+                process.run();
+                postProcess();
+            };
+        }
     }
 
     protected abstract void preProcess();

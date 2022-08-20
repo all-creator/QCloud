@@ -31,9 +31,8 @@ public class System {
                 mainController = new EULA();
                 osController.getCurrentOS().registerPaths();
                 licenseKey = ComputerIdentifier.getLicenseKey();
-                //TODO: check files, if not - install, if yes - load system UUID and check it on server side.
-
-                //TODO: if yes - load, if not - register
+                //TODO: check it on server side.
+                if (licenseKey.getUuid() != null) App.launcher();
             }
         });
     }

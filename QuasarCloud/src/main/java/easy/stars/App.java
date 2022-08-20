@@ -101,11 +101,14 @@ public class App extends Application {
         server.getLogger().logIn(LogBase.SUCCESS_START_SERVER);
     }
 
+    public static void launcher() {
+        launch();
+    }
+
     public static void main(String[] args) {
-        Arrays.stream(args).anyMatch(Predicate.isEqual("--update-skip"));
+        Arrays.stream(args).anyMatch(Predicate.isEqual("update-skip"));
         if (true) {
             system.start();
-            launch();
         } else update();
     }
 }

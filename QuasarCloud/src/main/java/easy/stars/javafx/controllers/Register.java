@@ -2,6 +2,8 @@ package easy.stars.javafx.controllers;
 
 import easy.stars.App;
 import easy.stars.javafx.AbstractFXController;
+import easy.stars.server.Server;
+import easy.stars.server.protocol.QCProtocol;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,8 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,6 +25,8 @@ public class Register extends AbstractFXController implements Initializable {
 
     @FXML
     public Label prompt;
+
+    private QCProtocol protocol;
 
     @FXML
     public TextField uuid;
@@ -54,6 +56,7 @@ public class Register extends AbstractFXController implements Initializable {
         clipboard.setContent(content);
         btnFinish.setDisable(false);
         prompt.setText("Команда скопирована в буфер обмена");
+        Server.register();
     }
 
     @Override
@@ -66,14 +69,15 @@ public class Register extends AbstractFXController implements Initializable {
     @FXML
     public void connect() {
         btnReconnect.setDisable(true);
-        try {
-            URL urlStatus = new URL("http://88.99.240.171:8081/status");
-            HttpURLConnection http = (HttpURLConnection) urlStatus.openConnection();
-            http.connect();
-            if (http.getResponseCode() == 200) online.setText("Статус сервера: Онлайн");
+        protocol = new QCProtocol(this::run, QCProtocol.ConnectionType.PING, true);
+    }
+
+    public void run() {
+        if (protocol.getResponseCode() == 200){
+            online.setText("Статус сервера: Онлайн");
             btnRegister.setDisable(false);
             prompt.setText("");
-        } catch (IOException ignored) {
+        } else {
             online.setText("Статус сервера: Офлайн");
             btnRegister.setDisable(true);
             btnReconnect.setDisable(false);

@@ -22,18 +22,18 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>18.0.1</version>
+            <version>18.0.2</version> <!-- 20-Avg-2022 -->
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>18.0.1</version>
+            <version>18.0.2</version> <!-- 20-Avg-2022 -->
         </dependency>
         <!--  OSHI project is platform independent hardware utilities -->
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core-java11</artifactId>
-            <version>6.1.6</version>
+            <version>6.2.2</version> <!-- 20-Avg-2022 -->
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
