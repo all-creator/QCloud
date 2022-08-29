@@ -1,9 +1,9 @@
 package easy.stars.server.log;
 
 import com.google.gson.Gson;
-import easy.stars.server.Config;
+import easy.stars.App;
 import easy.stars.server.object.LogMessage;
-import easy.stars.server.utils.Updater;
+import easy.stars.system.System;
 import easy.stars.system.identifier.LicenseKey;
 
 import java.io.IOException;
@@ -25,11 +25,8 @@ public class Logging {
         this.user = user;
     }
 
-    public static Logging createSystemLog(Config config) {
-        if (config.getSettings().contains("sendlog:true")) {
-            return new Logging(true, config.getClient());
-        }
-        return new Logging(false, config.getClient());
+    public static Logging createSystemLog(boolean isLog) {
+        return new Logging(isLog, App.system.getLicenseKey());
     }
 
     public void logIn(LogMessage obj){
@@ -37,11 +34,11 @@ public class Logging {
     }
 
     public void logIn(LogBase obj){
-        if (sendLog) log(parser.toJson(new LogMessage(Updater.VERSION, user.getUuid(), obj.getMessage())));
+        if (sendLog) log(parser.toJson(new LogMessage(System.getVersion(), user.getUuid(), obj.getMessage())));
     }
 
     public void logIn(String obj){
-        if (sendLog) log(parser.toJson(new LogMessage(Updater.VERSION, user.getUuid(), obj)));
+        if (sendLog) log(parser.toJson(new LogMessage(System.getVersion(), user.getUuid(), obj)));
     }
 
     private void log(String str){

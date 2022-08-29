@@ -2,16 +2,9 @@ package easy.stars;
 
 import com.google.gson.Gson;
 import easy.stars.javafx.AbstractFXController;
-import easy.stars.server.Config;
 import easy.stars.server.Server;
-import easy.stars.server.data.FileUtils;
-import easy.stars.server.data.Loader;
 import easy.stars.server.log.LogBase;
-import easy.stars.server.utils.Download;
-import easy.stars.server.utils.Updater;
-import easy.stars.server.utils.Zip;
 import easy.stars.system.System;
-import easy.stars.system.os.utils.OSUtils;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -24,7 +17,7 @@ import java.util.MissingFormatArgumentException;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-// TODO: Repair, Reinstall and QCProtocol whit support Process (post process, process and pre process), unite Error window
+// TODO: Repair, Reinstall, unite Error window
 
 public class App extends Application {
 
@@ -32,10 +25,7 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage stage;
-    public static final Config config = new Config();
-    public static final Updater updater = new Updater();
     public static final Gson parser = new Gson();
-    private static final Loader loader = new Loader();
 
     @Override
     public synchronized void start(Stage stage) throws IOException {
@@ -78,25 +68,9 @@ public class App extends Application {
         return stage;
     }
 
-    public static void downloadResource() throws IOException {
-        if (OSUtils.isWindows()) {
-            Download download = new Download("nircmd.exe.zip", "res/download");
-            download.download();
-            try {
-                Zip.extract(FileUtils.getResPath("nircmd.exe.zip").toFile(), FileUtils.getResPath().toFile());
-            } catch (Exception ignored) {
-            }
-            try {
-                Zip.extract(FileUtils.getResPath("QuasarSetup.exe.zip").toFile(), FileUtils.getResPath().toFile());
-            } catch (Exception ignored) {
-            }
-        }
-    }
-
     public static void startServer() {
-        Server server = new Server(loader.loadData());
+        Server server = new Server();
         Server.setInstance(server);
-        updater.checkUpdate();
         server.start();
         server.getLogger().logIn(LogBase.SUCCESS_START_SERVER);
     }
@@ -106,8 +80,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Arrays.stream(args).anyMatch(Predicate.isEqual("update-skip"));
-        if (true) {
+        if (Arrays.stream(args).noneMatch(Predicate.isEqual("update-skip"))) {
             system.start();
         } else update();
     }

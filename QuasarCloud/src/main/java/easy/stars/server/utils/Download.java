@@ -1,12 +1,13 @@
 package easy.stars.server.utils;
 
 import com.google.gson.Gson;
-import easy.stars.server.data.FileUtils;
+import easy.stars.App;
 import easy.stars.server.object.Message;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Paths;
 
 public class Download {
     protected static final String URL = "http://88.99.240.171:8081/";
@@ -22,7 +23,7 @@ public class Download {
     }
 
     public void download() throws IOException {
-        File file = FileUtils.getResPath(filename).toFile();
+        File file = Paths.get(App.system.getOsController().getCurrentOS().getResourcePath().toString(), filename).toFile();
         if (!file.exists() && file.createNewFile()) System.out.println("Загрузка ресурса - " + filename);
 
         String jsonFileName = parser.toJson(new Message(filename));

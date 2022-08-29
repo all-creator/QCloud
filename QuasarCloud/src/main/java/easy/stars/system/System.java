@@ -33,6 +33,7 @@ public class System {
                 licenseKey = ComputerIdentifier.getLicenseKey();
                 //TODO: check it on server side.
                 if (licenseKey.getUuid() != null) App.launcher();
+                else App.startServer();
             }
         });
     }

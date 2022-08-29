@@ -1,6 +1,5 @@
 package easy.stars.server.utils;
-
-import easy.stars.server.data.FileUtils;
+/*
 import easy.stars.server.object.Message;
 
 import java.io.BufferedReader;
@@ -56,4 +55,4 @@ public class Updater extends Download {
         download();
         Zip.extract(FileUtils.getResPath(filename).toFile(), FileUtils.getMainPath().toFile());
     }
-}
+}*/

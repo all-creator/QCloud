@@ -58,4 +58,17 @@ public class Windows extends SystemInformation implements OperationSystem {
     public List<Dependency> getDependencies() {
         return null;
     }
+
+    /*
+    @Deprecated(since = "4.0.0")
+    public void loadDependency(){
+        Download download = new Download("nircmd.exe.zip", "res/download");
+        try {
+            download.download();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Zip.extract(FileUtils.getResPath("nircmd.exe.zip").toFile(), FileUtils.getResPath().toFile());
+    }
+    */
 }

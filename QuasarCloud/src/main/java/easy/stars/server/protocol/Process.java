@@ -10,11 +10,15 @@ public abstract class Process {
     protected Process(Runnable process, boolean fxUse) {
         if (fxUse) {
             this.runnable = () -> {
+                sendOutput();
+                getInput();
                 Platform.runLater(process);
                 postProcess();
             };
         } else  {
             this.runnable = () -> {
+                sendOutput();
+                getInput();
                 process.run();
                 postProcess();
             };
@@ -25,7 +29,11 @@ public abstract class Process {
 
     protected abstract void postProcess();
 
-    protected void startProcess(){
+    protected abstract void sendOutput();
+
+    protected abstract void getInput();
+
+    public void startProcess(){
         preProcess();
         var t = new Thread(this.runnable);
         t.start();

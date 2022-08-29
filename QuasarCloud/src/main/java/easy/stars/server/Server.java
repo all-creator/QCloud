@@ -1,94 +1,62 @@
 package easy.stars.server;
 
 import easy.stars.App;
+import easy.stars.exceptions.LoggingNotSupportFormat;
 import easy.stars.server.log.LogBase;
 import easy.stars.server.log.Logging;
-import easy.stars.server.log.LoggingNotSupportFormat;
-import easy.stars.server.object.*;
+import easy.stars.server.object.LogMessage;
+import easy.stars.server.object.TelegramMessage;
+import easy.stars.server.object.Update;
+import easy.stars.server.protocol.QCProtocol;
 import easy.stars.server.utils.Worker;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static easy.stars.App.parser;
+import static easy.stars.App.system;
 
 public final class Server {
 
     public static final String MAIN_URL = "http://88.99.240.171:8081/";
 
     static Server instance;
-    Config config;
     Logging logger;
-    public boolean status = false;
 
-    public Server(Config config) {
-        this.config = config;
-        this.logger = Logging.createSystemLog(config);
+    public Server() {
+        this.logger = Logging.createSystemLog(system.isSendLog());
     }
 
     public void send(String message) throws IOException {
-        String gson = parser.toJson(new TelegramMessage(message, config.getClient().getUuid()));
-        byte[] out = gson.getBytes(StandardCharsets.UTF_8);
-        int length = out.length;
-        URL url = new URL(MAIN_URL + "tg/send");
-        URLConnection con = url.openConnection();
-        HttpURLConnection http = (HttpURLConnection) con;
-        http.setRequestMethod("POST");
-        http.setDoOutput(true);
-        http.setFixedLengthStreamingMode(length);
-        http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        http.connect();
-        try (OutputStream os = http.getOutputStream()) {
-            os.write(out);
-        }
+        QCProtocol protocol = new QCProtocol(()->{}, QCProtocol.ConnectionType.SEND);
+        protocol.setOut(parser.toJson(new TelegramMessage(message, system.getLicenseKey().getUuid())).getBytes());
+        protocol.jsonContentType();
+        protocol.startProcess();
     }
 
     public void start() {
-        Thread run = new Thread (() -> {
-            while (true) {
-                try {
-                    String gson = parser.toJson(new Hash(config.getClient().getUuid()));
-                    byte[] out = gson.getBytes(StandardCharsets.UTF_8);
-                    int length = out.length;
-                    URL url = new URL(MAIN_URL + "tg/update");
-                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                    http.setRequestMethod("POST");
-                    http.setDoOutput(true);
-                    http.setFixedLengthStreamingMode(length);
-                    http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                    http.connect();
-                    try (OutputStream os = http.getOutputStream()) {
-                        os.write(out);
-                    }
-                    BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
-                    String inputLine;
-                    StringBuffer response = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    in.close();
-                    gson = response.toString();
-                    Update update = parser.fromJson(gson, Update.class);
-                    if (update != null) Worker.work(update);
-                    http.disconnect();
-                    Thread.sleep(300);
-                } catch (Exception e) {
-                    System.out.println("Server Error");
+        AtomicReference<QCProtocol> protocol = new AtomicReference<>();
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(() -> {
+            protocol.set(new QCProtocol(() -> {
+                Update update = parser.fromJson(protocol.get().getIn(), Update.class);
+                if (update != null) {
                     try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
+                        Worker.work(update);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
-            }
-        });
-        run.start();
+            }, QCProtocol.ConnectionType.UPDATE));
+            protocol.get().setOut(parser.toJson(system.getLicenseKey().getUuidLocal()).getBytes(StandardCharsets.UTF_8));
+            protocol.get().plainTextContentType();
+            protocol.get().setDoInput(true);
+            protocol.get().startProcess();
+        },0, 300, TimeUnit.MILLISECONDS);
     }
 
     public <T> void log(T logging) throws LoggingNotSupportFormat {
@@ -100,27 +68,10 @@ public final class Server {
     }
 
     public static void register() {
-        String gson = parser.toJson(new RegisterClient(App.config.getClient()));
-        byte[] out = gson.getBytes(StandardCharsets.UTF_8);
-        int length = out.length;
-        try {
-            java.net.URL url = new URL(MAIN_URL + "tg/register");
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
-            http.setRequestMethod("POST");
-            http.setDoOutput(true);
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try(OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Config getConfig() {
-        return config;
+        var protocol = new QCProtocol(()->{}, QCProtocol.ConnectionType.REGISTER);
+        protocol.setOut(parser.toJson(App.system.getLicenseKey()).getBytes(StandardCharsets.UTF_8));
+        protocol.jsonContentType();
+        protocol.startProcess();
     }
 
     public Logging getLogger() {

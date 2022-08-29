@@ -1,12 +1,11 @@
 package easy.stars.server.protocol;
 
 import easy.stars.exceptions.ServerNotAllowedException;
+import easy.stars.exceptions.ServerResponseError;
 import easy.stars.exceptions.URLNotFound;
 import easy.stars.server.Server;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.*;
 import java.security.Permission;
 import java.util.List;
@@ -19,6 +18,8 @@ public class QCProtocol extends Process {
     final URL url;
 
     byte[] out;
+
+    String in;
 
     ConnectionType connectionType;
 
@@ -35,18 +36,26 @@ public class QCProtocol extends Process {
         } catch (IOException e) {
             throw new ServerNotAllowedException(e);
         }
-        startProcess();
+        try {
+            setRequestMethod(connectionType.method);
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
     }
 
-    public QCProtocol(Runnable process, URL url, boolean fxUse) {
+    public QCProtocol(Runnable process, URL url, boolean fxUse, String method) {
         super(process, fxUse);
         this.url = url;
         this.connectionType = null;
-        startProcess();
+        try {
+            setRequestMethod(method);
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
     }
 
-    public QCProtocol(Runnable process, URL url) {
-        this(process, url, false);
+    public QCProtocol(Runnable process, URL url, String method) {
+        this(process, url, false, method);
     }
 
     public QCProtocol(Runnable process, ConnectionType connectionType) {
@@ -60,6 +69,14 @@ public class QCProtocol extends Process {
         } catch (IOException e) {
             throw new ServerNotAllowedException(e);
         }
+    }
+
+    public void jsonContentType() {
+        this.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+    }
+
+    public void plainTextContentType() {
+        this.setRequestProperty("Content-Type", "text/plain; charset=UTF-8");
     }
 
     @Override
@@ -81,6 +98,35 @@ public class QCProtocol extends Process {
 
     public void setOut(byte[] out) {
         this.out = out;
+        setDoOutput(true);
+        setFixedLengthStreamingMode(out.length);
+    }
+
+    @Override
+    public void sendOutput(){
+        if (out != null) {
+            try (OutputStream os = this.getOutputStream()) {
+                os.write(this.out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void getInput() {
+        if (connection.getDoInput()) {
+            try (BufferedReader bf = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+                while ((inputLine = bf.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in = response.toString();
+            } catch (IOException e) {
+                throw new ServerResponseError(e);
+            }
+        }
     }
 
     public void setAuthenticator(Authenticator auth) {
@@ -295,18 +341,24 @@ public class QCProtocol extends Process {
         return connection.getRequestProperties();
     }
 
+    public String getIn() {
+        return in;
+    }
+
     public enum ConnectionType {
-        META("metadata"),
-        REGISTER("tg/register"),
-        SEND("tg/send"),
-        UPDATE("tg/update"),
-        PING("status"),
+        META("metadata", "POST"),
+        REGISTER("tg/register", "POST"),
+        SEND("tg/send", "POST"),
+        UPDATE("tg/update", "POST"),
+        PING("status", "GET"),
         ;
 
         final String url;
+        final String method;
 
-        ConnectionType(String type) {
+        ConnectionType(String type, String method) {
             this.url = type;
+            this.method = method;
         }
 
         public String getUrl() {

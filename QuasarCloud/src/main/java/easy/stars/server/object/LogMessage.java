@@ -1,7 +1,5 @@
 package easy.stars.server.object;
 
-import java.util.Arrays;
-
 public class LogMessage {
     String version;
     byte[] client;
@@ -35,25 +33,5 @@ public class LogMessage {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LogMessage that = (LogMessage) o;
-
-        if (version != null ? !version.equals(that.version) : that.version != null) return false;
-        if (!Arrays.equals(client, that.client)) return false;
-        return message != null ? message.equals(that.message) : that.message == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = version != null ? version.hashCode() : 0;
-        result = 31 * result + Arrays.hashCode(client);
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        return result;
     }
 }

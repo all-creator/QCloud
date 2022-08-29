@@ -13,6 +13,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Register extends AbstractFXController implements Initializable {
@@ -49,10 +50,11 @@ public class Register extends AbstractFXController implements Initializable {
     @FXML
     public void sendRegister() {
         uuid.setDisable(false);
-        uuid.setText(new String(App.system.getLicenseKey().getUuid()));
+        String uuidS = Arrays.toString(App.system.getLicenseKey().getUuid()).replace(" ", "");
+        uuid.setText(uuidS);
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-        content.putString("/reg " + new String(App.system.getLicenseKey().getUuid()));
+        content.putString("/reg " + uuidS);
         clipboard.setContent(content);
         btnFinish.setDisable(false);
         prompt.setText("Команда скопирована в буфер обмена");
@@ -70,6 +72,7 @@ public class Register extends AbstractFXController implements Initializable {
     public void connect() {
         btnReconnect.setDisable(true);
         protocol = new QCProtocol(this::run, QCProtocol.ConnectionType.PING, true);
+        protocol.startProcess();
     }
 
     public void run() {

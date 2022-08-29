@@ -7,13 +7,13 @@ public class LicenseKey implements Serializable {
     String uuidLocal;
     byte[] uuid;
 
-    public LicenseKey(String uuidGlobal, String uuidLocal, byte[] uuid) {
+    public LicenseKey(String uuidLocal, String uuidGlobal, byte[] uuid) {
         this.uuidGlobal = uuidGlobal;
         this.uuidLocal = uuidLocal;
         this.uuid = uuid;
     }
 
-    public LicenseKey(String uuidGlobal, String uuidLocal) {
+    public LicenseKey(String uuidLocal, String uuidGlobal) {
         this.uuidGlobal = uuidGlobal;
         this.uuidLocal = uuidLocal;
     }

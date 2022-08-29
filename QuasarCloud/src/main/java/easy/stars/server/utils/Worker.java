@@ -1,7 +1,7 @@
 package easy.stars.server.utils;
 
+import easy.stars.App;
 import easy.stars.server.Server;
-import easy.stars.server.data.FileUtils;
 import easy.stars.server.log.LocalSystemError;
 import easy.stars.server.object.Update;
 import easy.stars.system.os.utils.OSUtils;
@@ -10,6 +10,7 @@ import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Worker {
     static FileManager manager = new FileManager();
@@ -40,7 +41,8 @@ public class Worker {
             String[] script = new String[args.length+1];
             for (int i = 0; i < args.length+1; i++) {
                 if (i == 0) {
-                    script[0] = FileUtils.getResPath("nircmd.exe").toAbsolutePath().toString();
+                    script[0] = Paths.get(App.system.getOsController().getCurrentOS().getResourcePath().toString(),"nircmd.exe")
+                            .toAbsolutePath().toString();
                     continue;
                 }
                 script[i] = args[i-1];
@@ -78,17 +80,16 @@ public class Worker {
         if (args[0].equals("full")){
             HardwareAbstractionLayer hardware = systemInfo.getHardware();
             OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Полная информация о системе:\n").append(" Подключённые устройства:\n")
-                    .append("  Дисплеи:\n").append("   Кол-во Дисплеев:").append(hardware.getDisplays().size()).append("\n");
-            stringBuilder.append("  Память:\n").append("   Доступная память: ").append(hardware.getMemory().getAvailable()).append("\n")
-                    .append("   Всего памяти: ").append(hardware.getMemory().getTotal()).append("\n");
-            stringBuilder.append(" Информация об ОС:\n  Семейство: ").append(operatingSystem.getFamily()).append("\n")
-                    .append("  Версия: ").append(operatingSystem.getVersionInfo().getVersion()).append("\n")
-                    .append("  Сборка: ").append(operatingSystem.getVersionInfo().getBuildNumber()).append("\n");
-            stringBuilder.append("Имя пользователя: ").append(System.getProperty("user.name"));
+            String stringBuilder = "Полная информация о системе:\n" + " Подключённые устройства:\n" +
+                    "  Дисплеи:\n" + "   Кол-во Дисплеев:" + hardware.getDisplays().size() + "\n" +
+                    "  Память:\n" + "   Доступная память: " + hardware.getMemory().getAvailable() + "\n" +
+                    "   Всего памяти: " + hardware.getMemory().getTotal() + "\n" +
+                    " Информация об ОС:\n  Семейство: " + operatingSystem.getFamily() + "\n" +
+                    "  Версия: " + operatingSystem.getVersionInfo().getVersion() + "\n" +
+                    "  Сборка: " + operatingSystem.getVersionInfo().getBuildNumber() + "\n" +
+                    "Имя пользователя: " + System.getProperty("user.name");
             //stringBuilder.append("Ошибка получения информации о: Processor,NetworkIFs,DiskStores,GraphicsCards,Sensors,PowerSources,SoundCards,UsbDevices");
-            Server.getInstance().send(stringBuilder.toString());
+            Server.getInstance().send(stringBuilder);
         } else if (args[0].equals("low")) {
             String info = "Информация о системе: \n Семейство: " + systemInfo.getOperatingSystem().getFamily() + "\n" +
                     " Версия: " + systemInfo.getOperatingSystem().getVersionInfo().getVersion() + "\n" +
@@ -122,7 +123,8 @@ public class Worker {
 
         /*if(SystemUtils.IS_OS_AIX)
             shutdownCommand = "shutdown -Fh " + t;
-        else if(SystemUtils.IS_OS_FREE_BSD || SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC|| SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_NET_BSD || SystemUtils.IS_OS_OPEN_BSD || SystemUtils.IS_OS_UNIX)
+        else if(SystemUtils.IS_OS_FREE_BSD || SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC|| SystemUtils.IS_OS_MAC_OSX
+        || SystemUtils.IS_OS_NET_BSD || SystemUtils.IS_OS_OPEN_BSD || SystemUtils.IS_OS_UNIX)
             shutdownCommand = "shutdown -h " + t;
         else if(SystemUtils.IS_OS_HP_UX)
             shutdownCommand = "shutdown -hy " + t;
