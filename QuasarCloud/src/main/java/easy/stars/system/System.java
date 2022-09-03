@@ -4,13 +4,21 @@ import easy.stars.App;
 import easy.stars.exceptions.VersionException;
 import easy.stars.javafx.AbstractFXController;
 import easy.stars.javafx.controllers.EULA;
+import easy.stars.javafx.controllers.errors.Error;
 import easy.stars.javafx.controllers.errors.NetworkError;
 import easy.stars.system.identifier.ComputerIdentifier;
 import easy.stars.system.identifier.LicenseKey;
 import easy.stars.system.os.OSController;
 import oshi.SystemInfo;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 
 public class System {
@@ -28,6 +36,7 @@ public class System {
         mainController = new NetworkError();
         new SystemInfo().getHardware().getNetworkIFs().forEach(a -> {
             if (a.getIPv4addr().length > 0) {
+                java.lang.System.out.println("Сеть найдена");
                 mainController = new EULA();
                 osController.getCurrentOS().registerPaths();
                 licenseKey = ComputerIdentifier.getLicenseKey();
@@ -36,6 +45,7 @@ public class System {
                 else App.startServer();
             }
         });
+        if (mainController instanceof Error) App.launcher();
     }
 
     public static String getVersion() {
@@ -58,6 +68,10 @@ public class System {
         return mainController;
     }
 
+    public void setMainController(AbstractFXController mainController) {
+        this.mainController = mainController;
+    }
+
     public LicenseKey getLicenseKey() {
         return licenseKey;
     }
@@ -68,5 +82,27 @@ public class System {
 
     public void setSendLog(boolean sendLog) {
         isSendLog = sendLog;
+    }
+
+    public void creteLockFile() {
+        if (this.getOsController().getCurrentOS().getResourceByName("lock.lock").toFile().exists()) return;
+        try {
+            Files.createFile(this.getOsController().getCurrentOS().getResourceByName("lock.lock"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteLockFile(){
+        if (!this.getOsController().getCurrentOS().getResourceByName("lock.lock").toFile().exists()) return;
+        try {
+            Files.delete(this.getOsController().getCurrentOS().getResourceByName("lock.lock"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean lock(){
+        return this.getOsController().getCurrentOS().getResourceByName("lock.lock").toFile().exists();
     }
 }

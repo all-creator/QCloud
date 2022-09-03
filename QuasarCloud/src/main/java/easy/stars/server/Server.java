@@ -12,6 +12,7 @@ import easy.stars.server.utils.Worker;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,20 +44,22 @@ public final class Server {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
             protocol.set(new QCProtocol(() -> {
+                System.out.println("Получаю пакет");
                 Update update = parser.fromJson(protocol.get().getIn(), Update.class);
                 if (update != null) {
                     try {
+                        System.out.println("Получен пакет типа: " + update.getType() + " со значением: " + Arrays.toString(update.getArgs()) + " с описанием: " + update.getDescription());
                         Worker.work(update);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
+                } else System.out.println("Пакет пуст");
             }, QCProtocol.ConnectionType.UPDATE));
             protocol.get().setOut(parser.toJson(system.getLicenseKey().getUuidLocal()).getBytes(StandardCharsets.UTF_8));
             protocol.get().plainTextContentType();
             protocol.get().setDoInput(true);
             protocol.get().startProcess();
-        },0, 300, TimeUnit.MILLISECONDS);
+        },0, 500, TimeUnit.MILLISECONDS);
     }
 
     public <T> void log(T logging) throws LoggingNotSupportFormat {

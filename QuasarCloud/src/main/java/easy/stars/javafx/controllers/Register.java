@@ -4,6 +4,7 @@ import easy.stars.App;
 import easy.stars.javafx.AbstractFXController;
 import easy.stars.server.Server;
 import easy.stars.server.protocol.QCProtocol;
+import easy.stars.system.os.object.Windows;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -66,6 +68,7 @@ public class Register extends AbstractFXController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnFinish.setDisable(true);
         connect();
+        if (App.system.getOsController().getCurrentOS() instanceof Windows windows) windows.loadDependency();
     }
 
     @FXML

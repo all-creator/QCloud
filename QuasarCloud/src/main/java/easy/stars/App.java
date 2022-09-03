@@ -2,6 +2,7 @@ package easy.stars;
 
 import com.google.gson.Gson;
 import easy.stars.javafx.AbstractFXController;
+import easy.stars.javafx.controllers.errors.DuplicateError;
 import easy.stars.server.Server;
 import easy.stars.server.log.LogBase;
 import easy.stars.system.System;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.util.Arrays;
 import java.util.MissingFormatArgumentException;
 import java.util.Objects;
@@ -80,9 +83,15 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        if (Arrays.stream(args).noneMatch(Predicate.isEqual("update-skip"))) {
-            system.start();
-        } else update();
+        if (system.lock()) {
+            system.setMainController(new DuplicateError());
+            launch();
+        } else {
+            Runtime.getRuntime().addShutdownHook(new Thread(system::deleteLockFile));
+            system.creteLockFile();
+            if (Arrays.stream(args).noneMatch(Predicate.isEqual("update-skip"))) system.start();
+            else update();
+        }
     }
 }
 

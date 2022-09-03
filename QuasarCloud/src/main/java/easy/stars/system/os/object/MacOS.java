@@ -6,7 +6,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
-public class MacOS extends SystemInformation implements OperationSystem {
+public class MacOS extends OS {
 
     @Override
     public SystemInformation getInformation() {
@@ -29,18 +29,18 @@ public class MacOS extends SystemInformation implements OperationSystem {
     }
 
     @Override
-    public void createMainPath() {
-        new File(getMainPath().toUri()).mkdir();
+    public boolean createMainPath() {
+        return new File(getMainPath().toUri()).mkdir();
     }
 
     @Override
-    public void createLibsPath() {
-        new File(getLibsPath().toUri()).mkdir();
+    public boolean createLibsPath() {
+        return new File(getLibsPath().toUri()).mkdir();
     }
 
     @Override
-    public void createResourcePath() {
-        new File(getResourcePath().toUri()).mkdir();
+    public boolean createResourcePath() {
+        return new File(getResourcePath().toUri()).mkdir();
     }
 
     @Override
@@ -51,7 +51,52 @@ public class MacOS extends SystemInformation implements OperationSystem {
     }
 
     @Override
+    public Path getResourceByName(String name) {
+        return null;
+    }
+
+    @Override
+    public Path getLibByName(String name) {
+        return null;
+    }
+
+    @Override
     public List<Dependency> getDependencies() {
         return null;
+    }
+
+    @Override
+    public void loadAllDependencies() {
+
+    }
+
+    @Override
+    public void setVolumeInPercent(int volume) {
+
+    }
+
+    @Override
+    public void setVolume(int volume) {
+
+    }
+
+    @Override
+    public void incVolume(int volume) {
+
+    }
+
+    @Override
+    public void decVolume(int volume) {
+
+    }
+
+    @Override
+    public void incVolumeInPercent(int volume) {
+
+    }
+
+    @Override
+    public void decVolumeInPercent(int volume) {
+
     }
 }

@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>easy.stars</groupId>
     <artifactId>QuasarCloud</artifactId>
-    <version>4.0.24</version>
+    <version>4.0.25</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
-        <maven.compiler.release>15</maven.compiler.release>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.release>16</maven.compiler.release>
     </properties>
     <dependencies>
         <!--  Gson: Java to Json conversion -->
@@ -38,12 +38,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.0-alpha7</version> <!-- 01-May-2022 -->
+            <version>2.0.0</version> <!-- 01-May-2022 -->
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
-            <version>2.0.0-alpha7</version> <!-- 01-May-2022 -->
+            <version>2.0.0</version> <!-- 01-May-2022 -->
         </dependency>
 
     </dependencies>
@@ -61,6 +61,8 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -104,6 +106,7 @@
                         <configuration>
                             <icon>src/main/resources/icons/icon.ico</icon>
                             <winMenu>false</winMenu>
+                            <type>MSI</type>
                         </configuration>
                     </execution>
                 </executions>

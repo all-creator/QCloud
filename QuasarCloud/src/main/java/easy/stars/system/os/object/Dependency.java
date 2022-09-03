@@ -16,4 +16,8 @@ public class Dependency extends QCProtocol {
         this.name = name;
     }
 
+    public void load(){
+        this.startProcess();
+    }
+
 }

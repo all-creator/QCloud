@@ -6,24 +6,12 @@ import easy.stars.system.os.object.SystemInformation;
 import java.nio.file.Path;
 import java.util.List;
 
-public interface OperationSystem {
+public interface OperationSystem extends FileSystem {
 
     SystemInformation getInformation();
 
-    Path getMainPath();
-
-    Path getResourcePath();
-
-    Path getLibsPath();
-
-    void createMainPath();
-
-    void createLibsPath();
-
-    void createResourcePath();
-
-    void registerPaths();
-
     List<Dependency> getDependencies();
+
+    void loadAllDependencies();
 
 }

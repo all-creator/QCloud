@@ -11,6 +11,9 @@ import oshi.software.os.OperatingSystem;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+
+import static easy.stars.App.system;
 
 public class Worker {
     static FileManager manager = new FileManager();
@@ -19,16 +22,26 @@ public class Worker {
     }
 
     public static void work(Update update) throws IOException {
+        System.out.println("Выполнен пакет типа: " + update.getType() + " со значением: " + Arrays.toString(update.getArgs()) + " с описанием: " + update.getDescription());
         switch (update.getType()) {
             case "info" -> getInfo(update.getArgs());
             case "file" -> manager.work(update.getArgs());
             case "shutdown" -> shutdown(Integer.parseInt(update.getArgs()[1]), update.getArgs());
-            case "volume" -> SystemController.setVolume(Integer.parseInt(update.getArgs()[0]));
+            case "volume" -> parsVolume(Integer.parseInt(update.getArgs()[0]), "%");
             case "brightness" -> SystemController.setBrightness(Integer.parseInt(update.getArgs()[0]));
             case "command" -> runCommand(update.getArgs());
             case "script" -> runScript(update.getArgs());
             case "ping" -> System.out.println("ping");
             default -> Server.getInstance().send(LocalSystemError.ERROR110.getInformation());
+        }
+    }
+
+    private static void parsVolume(int vol, String type) {
+        System.out.println(vol);
+        switch (type) {
+            case "%" -> system.getOsController().getCurrentOS().setVolumeInPercent(vol);
+            case "+" -> system.getOsController().getCurrentOS().incVolumeInPercent(vol);
+            case "-" -> system.getOsController().getCurrentOS().decVolumeInPercent(vol);
         }
     }
 
@@ -41,7 +54,7 @@ public class Worker {
             String[] script = new String[args.length+1];
             for (int i = 0; i < args.length+1; i++) {
                 if (i == 0) {
-                    script[0] = Paths.get(App.system.getOsController().getCurrentOS().getResourcePath().toString(),"nircmd.exe")
+                    script[0] = Paths.get(system.getOsController().getCurrentOS().getResourcePath().toString(),"nircmd.exe")
                             .toAbsolutePath().toString();
                     continue;
                 }
