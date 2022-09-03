@@ -2,9 +2,9 @@ package easy.stars.server.object;
 
 public class TelegramMessage {
     String message;
-    byte[] clientId;
+    String clientId;
 
-    public TelegramMessage(String message, byte[] clientId) {
+    public TelegramMessage(String message, String clientId) {
         this.message = message;
         this.clientId = clientId;
     }
@@ -17,11 +17,11 @@ public class TelegramMessage {
         this.message = message;
     }
 
-    public byte[] getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(byte[] clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 }

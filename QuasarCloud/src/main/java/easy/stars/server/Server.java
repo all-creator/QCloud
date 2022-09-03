@@ -33,7 +33,7 @@ public final class Server {
 
     public void send(String message) throws IOException {
         QCProtocol protocol = new QCProtocol(()->{}, QCProtocol.ConnectionType.SEND);
-        protocol.setOut(parser.toJson(new TelegramMessage(message, system.getLicenseKey().getUuid())).getBytes());
+        protocol.setOut(parser.toJson(new TelegramMessage(message, system.getLicenseKey().getUuidLocal())).getBytes());
         protocol.jsonContentType();
         protocol.startProcess();
     }
