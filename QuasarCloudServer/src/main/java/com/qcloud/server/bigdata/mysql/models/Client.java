@@ -18,11 +18,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
+public class  Client {
 
     @Id
     @NotNull
-    String hash;
+    String uuid;
 
     @NotNull
     String info;

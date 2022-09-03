@@ -15,8 +15,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 import java.io.File;
 import java.sql.Date;
@@ -120,7 +122,7 @@ public class CallbackParser {
         builder.append(main.getFrom().getUserName()).append("!\n\n");
         if (Scripts.hasClient(main.getFrom().getId())) {
             builder.append("Используйте команду /reg <UUID> для добавления ПК в систему или выберите из доступных:");
-            editMessageText.replyMarkup((InlineKeyboardMarkup) Keyboard.CLIENTS.getKeyboard(user));
+            //Keyboard.CLIENTS.getKeyboard(user);
         } else {
             builder.append("Я не нашёл машин привязанных к данному пользователю, начинаю загрузку...\n\n");
             builder.append("Используйте команду /reg <UUID> для добавления ПК в систему.");

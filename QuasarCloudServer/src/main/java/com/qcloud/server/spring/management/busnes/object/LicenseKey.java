@@ -5,7 +5,8 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterClient {
-    String uuid;
-    byte[] hash;
+public class LicenseKey {
+    String uuidGlobal;
+    String uuidLocal;
+    byte[] uuid;
 }

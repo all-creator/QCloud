@@ -16,19 +16,19 @@ public class UserServes {
     private static Map<String, Queue<Request>> request = new HashMap<>();
 
     public static boolean requestCheck(Client client){
-        return request.containsKey(client.getHash());
+        return request.containsKey(client.getUuid());
     }
 
     public static void requestCreate(Client client){
-         request.put(client.getHash(), new ArrayDeque<>());
+         request.put(client.getUuid(), new ArrayDeque<>());
     }
 
     public static Queue<Request> requestGet(Client client){
-        return request.get(client.getHash());
+        return request.get(client.getUuid());
     }
 
     public static void requestAdd(Client client, Request request){
-        UserServes.request.get(client.getHash()).add(request);
+        UserServes.request.get(client.getUuid()).add(request);
     }
 
     public static void userSave(UserRepository repository, User user){

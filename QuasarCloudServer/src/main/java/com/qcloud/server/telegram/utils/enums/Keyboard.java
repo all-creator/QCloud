@@ -48,6 +48,7 @@ public enum Keyboard {
                 }
                 i ++;
             }
+            if (clientsList.length < 2) return null;
             return ButtonAPI.createKeyboard(clientsList);
         }
     },

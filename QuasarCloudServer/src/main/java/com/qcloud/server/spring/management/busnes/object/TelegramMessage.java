@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TelegramMessage {
     String message;
-    byte[] clientId;
+    String clientId;
 }

@@ -30,7 +30,7 @@ public class Session {
         session.getClients().add(client);
         session.setCurrentClient(client);
         Bot.getSessionMap().put(user.getTelegramId().toString(), session);
-        Bot.getSessionMap().put(client.getHash(), session);
+        Bot.getSessionMap().put(client.getUuid(), session);
         UserServes.requestCreate(client);
         session.setInfo();
         return session;
